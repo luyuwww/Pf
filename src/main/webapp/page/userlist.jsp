@@ -18,9 +18,9 @@
 			<h2>用户列表</h2>
 			<c:forEach items="${userlist}" var="user">
 				<div class="row">
-					<div class="col-md-1">${user.did}</div>
-					<div class="col-md-3">${user.usercode}</div>
-					<div class="col-md-3">${user.username}</div>
+					<div class="col-md-1">${user.uid}</div>
+					<div class="col-md-3">${user.uusercode}</div>
+					<div class="col-md-3">${user.uusername}</div>
 				</div>
 			</c:forEach>
 		</div>

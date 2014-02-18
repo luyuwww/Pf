@@ -11,32 +11,13 @@
 	    <link href="${pageContext.request.contextPath}/res/js/bootstrap-3.0.3-dist/css/bootstrap-theme.min.css" rel="stylesheet">
 	    <link href="${pageContext.request.contextPath}/res/js/self/theme.css" rel="stylesheet">
 	</head>
-	<script type="text/javascript">
-	function submitSyncUserGroup(){
-		var r=confirm("慎重: 确定进行用户同步吗?");
-		if (r==true){
-			window.location.assign("/LamsIFML/syncUserGroup");
-		}else{
-			alert("取消!");
-		}
-	}
-	</script>
 <body>
 	<div class="container theme-showcase">
 		<p>
-			<button class="btn btn-lg btn-warning" onclick="submitSyncUserGroup()">同步用户和部门</button>
-			<br>
-			<a class="btn btn-lg btn-default"
-				href="${pageContext.request.contextPath}/gepsCtl/testGeps">查看项目个数 (测试)</a>
-			<br>
 			<a class="btn btn-lg btn-primary"
 	 			href="${pageContext.request.contextPath}/viewLogList">查看日志</a>
 			<a class="btn btn-lg btn-success"
 				href="${pageContext.request.contextPath}/getUsers">列出所有用户</a>
-			<a class="btn btn-lg btn-info"
-				href="${pageContext.request.contextPath}/cxf">查看服务</a>
-			<a class="btn btn-lg btn-danger"
-				href="${pageContext.request.contextPath}/initMapping">初始化接口代码表</a>
 		</p>
 	</div>
 </body>
