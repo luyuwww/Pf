@@ -14,8 +14,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import ch.qos.logback.classic.Logger;
@@ -26,10 +28,28 @@ public class CommonCtler {
 	/**
 	 * 主页跳转
 	 */
-	@RequestMapping(value={"/index.html","/"})
+	@RequestMapping(value={"/index.html","/" , "/page/againlogin"})
 	public String gotoIndex() {
 		return "index.jsp";
 	}
+	/**
+	 * login
+	 */
+	@RequestMapping(value="/login" , method = RequestMethod.POST)
+	public ModelAndView login(ModelMap modelMap, HttpServletRequest request, HttpServletResponse response,
+			@RequestParam("usercode") String usercode, @RequestParam("passwd") String passwd) {
+		System.out.println(usercode);
+		System.out.println(passwd);
+		if(usercode.equals("ROOT") && passwd.equals("ROOT")){
+			File[] listFile = new File(logHomeAdd).listFiles();
+			return new ModelAndView("listLog.jsp", "listFile", listFile);
+		}else{
+			return new ModelAndView("againlogin", "returnMsg", "登录失败");
+		}
+	}
+	
+	
+	
 	/**
 	 * 列出所有日志 
 	 */
