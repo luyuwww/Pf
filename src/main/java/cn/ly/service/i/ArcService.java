@@ -4,13 +4,13 @@ import java.util.List;
 
 import javax.jws.WebService;
 
-import cn.ly.pojo.PfUser;
+import cn.ly.pojo.PFUser;
 @WebService
 public interface ArcService {
 	
 	/**
 	 * 列出所有用户
 	 */
-	public List<PfUser> listAllUser();
+	public List<PFUser> listAllUser();
 	
 }

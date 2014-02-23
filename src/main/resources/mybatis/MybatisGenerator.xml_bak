@@ -37,7 +37,11 @@
 			<property name="enableSubPackages" value="true" />
 		</javaClientGenerator>
 
-		<table tableName="pf_dep" domainObjectName="PfDep" />
-		<table tableName="pf_user" domainObjectName="PfUser" />
+		<table tableName="pf_dept" domainObjectName="PFDept" />
+		<table tableName="pf_user" domainObjectName="PFUser" />
+		<table tableName="pf_grade" domainObjectName="PFGrade" />
+		<table tableName="pf_evaluate" domainObjectName="PFEvaluage" />
+		<table tableName="pf_category" domainObjectName="PFCategory" />
+		<table tableName="pf_examitem" domainObjectName="PFExamItem" />
 	</context>
 </generatorConfiguration>

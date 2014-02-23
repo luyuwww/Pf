@@ -9,7 +9,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import cn.ly.pojo.PfUser;
+import cn.ly.pojo.PFUser;
 import cn.ly.service.i.ArcService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -19,8 +19,8 @@ public class BackLogTest extends AbstractJUnit4SpringContextTests {
 	private ArcService arcServcieImpl;
 	@Test
 	public void test01(){
-		List<PfUser>  userList = arcServcieImpl.listAllUser();
-		for (PfUser pfUser : userList) {
+		List<PFUser>  userList = arcServcieImpl.listAllUser();
+		for (PFUser pfUser : userList) {
 			System.out.println(pfUser.getUemail());
 			
 		}
