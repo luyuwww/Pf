@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.ly.dao.i.PFGradeMapper" >
+  <resultMap id="BaseResultMap" type="cn.ly.pojo.PFGrade" >
+    <id column="did" property="did" jdbcType="INTEGER" />
+    <result column="operusercode" property="operusercode" jdbcType="VARCHAR" />
+    <result column="boperusercode" property="boperusercode" jdbcType="VARCHAR" />
+    <result column="opertiime" property="opertiime" jdbcType="TIMESTAMP" />
+    <result column="operquarter" property="operquarter" jdbcType="TINYINT" />
+    <result column="taccount" property="taccount" jdbcType="DECIMAL" />
+    <result column="isok" property="isok" jdbcType="TINYINT" />
+    <result column="operuserdid" property="operuserdid" jdbcType="INTEGER" />
+    <result column="boperuserdid" property="boperuserdid" jdbcType="INTEGER" />
+    <result column="operusername" property="operusername" jdbcType="VARCHAR" />
+    <result column="boperusername" property="boperusername" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    did, operusercode, boperusercode, opertiime, operquarter, taccount, isok, operuserdid, 
+    boperuserdid, operusername, boperusername
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="cn.ly.pojo.PFGradeExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from pf_grade
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from pf_grade
+    where did = #{did,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from pf_grade
+    where did = #{did,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="cn.ly.pojo.PFGradeExample" >
+    delete from pf_grade
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="cn.ly.pojo.PFGrade" >
+    insert into pf_grade (did, operusercode, boperusercode, 
+      opertiime, operquarter, taccount, 
+      isok, operuserdid, boperuserdid, 
+      operusername, boperusername)
+    values (#{did,jdbcType=INTEGER}, #{operusercode,jdbcType=VARCHAR}, #{boperusercode,jdbcType=VARCHAR}, 
+      #{opertiime,jdbcType=TIMESTAMP}, #{operquarter,jdbcType=TINYINT}, #{taccount,jdbcType=DECIMAL}, 
+      #{isok,jdbcType=TINYINT}, #{operuserdid,jdbcType=INTEGER}, #{boperuserdid,jdbcType=INTEGER}, 
+      #{operusername,jdbcType=VARCHAR}, #{boperusername,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="cn.ly.pojo.PFGrade" >
+    insert into pf_grade
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="did != null" >
+        did,
+      </if>
+      <if test="operusercode != null" >
+        operusercode,
+      </if>
+      <if test="boperusercode != null" >
+        boperusercode,
+      </if>
+      <if test="opertiime != null" >
+        opertiime,
+      </if>
+      <if test="operquarter != null" >
+        operquarter,
+      </if>
+      <if test="taccount != null" >
+        taccount,
+      </if>
+      <if test="isok != null" >
+        isok,
+      </if>
+      <if test="operuserdid != null" >
+        operuserdid,
+      </if>
+      <if test="boperuserdid != null" >
+        boperuserdid,
+      </if>
+      <if test="operusername != null" >
+        operusername,
+      </if>
+      <if test="boperusername != null" >
+        boperusername,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="did != null" >
+        #{did,jdbcType=INTEGER},
+      </if>
+      <if test="operusercode != null" >
+        #{operusercode,jdbcType=VARCHAR},
+      </if>
+      <if test="boperusercode != null" >
+        #{boperusercode,jdbcType=VARCHAR},
+      </if>
+      <if test="opertiime != null" >
+        #{opertiime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operquarter != null" >
+        #{operquarter,jdbcType=TINYINT},
+      </if>
+      <if test="taccount != null" >
+        #{taccount,jdbcType=DECIMAL},
+      </if>
+      <if test="isok != null" >
+        #{isok,jdbcType=TINYINT},
+      </if>
+      <if test="operuserdid != null" >
+        #{operuserdid,jdbcType=INTEGER},
+      </if>
+      <if test="boperuserdid != null" >
+        #{boperuserdid,jdbcType=INTEGER},
+      </if>
+      <if test="operusername != null" >
+        #{operusername,jdbcType=VARCHAR},
+      </if>
+      <if test="boperusername != null" >
+        #{boperusername,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="cn.ly.pojo.PFGradeExample" resultType="java.lang.Integer" >
+    select count(*) from pf_grade
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update pf_grade
+    <set >
+      <if test="record.did != null" >
+        did = #{record.did,jdbcType=INTEGER},
+      </if>
+      <if test="record.operusercode != null" >
+        operusercode = #{record.operusercode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.boperusercode != null" >
+        boperusercode = #{record.boperusercode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.opertiime != null" >
+        opertiime = #{record.opertiime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.operquarter != null" >
+        operquarter = #{record.operquarter,jdbcType=TINYINT},
+      </if>
+      <if test="record.taccount != null" >
+        taccount = #{record.taccount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.isok != null" >
+        isok = #{record.isok,jdbcType=TINYINT},
+      </if>
+      <if test="record.operuserdid != null" >
+        operuserdid = #{record.operuserdid,jdbcType=INTEGER},
+      </if>
+      <if test="record.boperuserdid != null" >
+        boperuserdid = #{record.boperuserdid,jdbcType=INTEGER},
+      </if>
+      <if test="record.operusername != null" >
+        operusername = #{record.operusername,jdbcType=VARCHAR},
+      </if>
+      <if test="record.boperusername != null" >
+        boperusername = #{record.boperusername,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update pf_grade
+    set did = #{record.did,jdbcType=INTEGER},
+      operusercode = #{record.operusercode,jdbcType=VARCHAR},
+      boperusercode = #{record.boperusercode,jdbcType=VARCHAR},
+      opertiime = #{record.opertiime,jdbcType=TIMESTAMP},
+      operquarter = #{record.operquarter,jdbcType=TINYINT},
+      taccount = #{record.taccount,jdbcType=DECIMAL},
+      isok = #{record.isok,jdbcType=TINYINT},
+      operuserdid = #{record.operuserdid,jdbcType=INTEGER},
+      boperuserdid = #{record.boperuserdid,jdbcType=INTEGER},
+      operusername = #{record.operusername,jdbcType=VARCHAR},
+      boperusername = #{record.boperusername,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="cn.ly.pojo.PFGrade" >
+    update pf_grade
+    <set >
+      <if test="operusercode != null" >
+        operusercode = #{operusercode,jdbcType=VARCHAR},
+      </if>
+      <if test="boperusercode != null" >
+        boperusercode = #{boperusercode,jdbcType=VARCHAR},
+      </if>
+      <if test="opertiime != null" >
+        opertiime = #{opertiime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operquarter != null" >
+        operquarter = #{operquarter,jdbcType=TINYINT},
+      </if>
+      <if test="taccount != null" >
+        taccount = #{taccount,jdbcType=DECIMAL},
+      </if>
+      <if test="isok != null" >
+        isok = #{isok,jdbcType=TINYINT},
+      </if>
+      <if test="operuserdid != null" >
+        operuserdid = #{operuserdid,jdbcType=INTEGER},
+      </if>
+      <if test="boperuserdid != null" >
+        boperuserdid = #{boperuserdid,jdbcType=INTEGER},
+      </if>
+      <if test="operusername != null" >
+        operusername = #{operusername,jdbcType=VARCHAR},
+      </if>
+      <if test="boperusername != null" >
+        boperusername = #{boperusername,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where did = #{did,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="cn.ly.pojo.PFGrade" >
+    update pf_grade
+    set operusercode = #{operusercode,jdbcType=VARCHAR},
+      boperusercode = #{boperusercode,jdbcType=VARCHAR},
+      opertiime = #{opertiime,jdbcType=TIMESTAMP},
+      operquarter = #{operquarter,jdbcType=TINYINT},
+      taccount = #{taccount,jdbcType=DECIMAL},
+      isok = #{isok,jdbcType=TINYINT},
+      operuserdid = #{operuserdid,jdbcType=INTEGER},
+      boperuserdid = #{boperuserdid,jdbcType=INTEGER},
+      operusername = #{operusername,jdbcType=VARCHAR},
+      boperusername = #{boperusername,jdbcType=VARCHAR}
+    where did = #{did,jdbcType=INTEGER}
+  </update>
+</mapper>
