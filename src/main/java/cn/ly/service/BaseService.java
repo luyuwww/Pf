@@ -3,7 +3,6 @@ package cn.ly.service;
 import java.io.Reader;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
@@ -21,7 +20,6 @@ import org.springframework.stereotype.Service;
 import ch.qos.logback.classic.Logger;
 import cn.ly.dao.JdbcDao;
 import cn.ly.util.DateUtil;
-import cn.ly.util.GlobalFinalAttr.DatabaseType;
 
 @Service
 public class BaseService {
@@ -87,62 +85,6 @@ public class BaseService {
 		return typeStr;
 	}
 	
-	/**
-	 * 得到数据库类型的 DatabaseType
-	 */
-	protected DatabaseType getDatabaseType(){
-		DatabaseType databaseType = null;
-		try {
-			databaseType = DatabaseType.getDatabaseType(getDBTyeStr());
-		} catch (Exception e) {
-			log.error(e.getMessage());
-		}
-		return databaseType;
-	}
-	
-	/**
-	 * 根据表名判断数据表是否存在
-	 */
-	protected Boolean existTable(String tablename){
-		boolean result = false;
-		Connection conn = null;
-		DatabaseMetaData dbmd = null;
-		ResultSet rs = null;
-		try {
-			conn = jdbcDao.getConn();
-			dbmd = conn.getMetaData();
-			String schemaName = getSchemaName(dbmd);
-			rs = dbmd.getTables(null , schemaName ,  tablename, new String[]{"TABLE"});
-			if(rs.next()){
-				result = true;
-			}
-		}catch(Exception ex){
-			log.error(ex.getMessage());
-		}finally{
-			try {
-				dbmd = null;
-				rs.close();
-				conn.close();
-			} catch (SQLException e) {
-				log.error("获取ConnectionMetaData关闭链接错误!");
-			}
-		}
-		return result;
-	}
-	
-	/**
-	 * 判断表的字段是否存在
-	 */
-	protected boolean existColumn(String tablename,String columnName){
-		return existColumnOrIndex(tablename, columnName, true);
-	}
-	/**
-	 * 判断字段的索引是否存在
-	 */
-	protected boolean existIndex(String tablename,String indexName){
-		
-		return existColumnOrIndex(tablename, indexName, false);
-	}
 	
 	protected Map<String, Object> queryForMap(String sql){
 		return jdbcDao.queryForMap(sql);
@@ -158,81 +100,6 @@ public class BaseService {
 	 */
 	protected Map<String , String> quert2Colum4Map(String sql , String col1 , String col2){
 		return jdbcDao.quert2Colum4Map(sql , col1 , col2);
-	}
-	/**
-	 * 判断表的字段或者索引是否存在
-	 * @param tablename 表名
-	 * @param columnOrIndexName 字段名, 或者索引名
-	 * @param isColumn true字段 false索引
-	 * @return boolean true存在 false 不存在
-	 */
-	protected boolean existColumnOrIndex(String tablename,String columnOrIndexName,boolean isColumn){
-		boolean result = false;
-		Connection conn = null;
-		DatabaseMetaData dbmd = null;
-		ResultSet rs = null;
-		try {
-			conn = jdbcDao.getConn();
-			dbmd = conn.getMetaData();
-			String schemaName = getSchemaName(dbmd);
-			if(isColumn){
-				rs = dbmd.getColumns(null, schemaName, tablename, columnOrIndexName);
-				if(rs.next()){
-					result = true;
-				}
-			}else{
-				rs = dbmd.getIndexInfo(null, schemaName, tablename, false, false);
-				while (rs.next()) {
-					String indexName = rs.getString(6);
-					if(indexName!=null&&indexName.equals(columnOrIndexName)){
-						result = true;
-						break;
-					}
-				}
-			}
-		}catch(Exception ex){
-			log.error(ex.getMessage());
-		}finally{
-			try {
-				dbmd = null;
-				rs.close();
-				conn.close();
-			} catch (SQLException e) {
-				log.error("获取ConnectionMetaData关闭链接错误!");
-			}
-		}
-		return result;
-	}
-	
-	/**
-	 * 根据表字段是否可以为空
-	 */
-	protected boolean validateColumnIsNULL(String tablename,String columnName){
-		boolean result = false;
-		Connection conn = null;
-		DatabaseMetaData dbmd = null;
-		ResultSet rs = null;
-		try {
-			conn = jdbcDao.getConn();
-			dbmd = conn.getMetaData();
-			String schemaName = getSchemaName(dbmd); 
-			rs = dbmd.getColumns(null, schemaName , tablename, columnName);
-			if(rs.next()){
-				String notnull = rs.getString(11);
-				result = notnull!=null&&notnull.equals("1");
-			}
-		}catch(Exception ex){
-			log.error(ex.getMessage());
-		}finally{
-			try {
-				dbmd = null;
-				rs.close();
-				conn.close();
-			} catch (SQLException e) {
-				log.error("获取ConnectionMetaData关闭链接错误!");
-			}
-		}
-		return result;
 	}
 	
 	/**
@@ -258,25 +125,6 @@ public class BaseService {
 			}
 		}
 		return result;
-	}
-	
-	/**
-	 * 获取表模式 private
-	 */
-	private String getSchemaName(DatabaseMetaData dbmd) throws SQLException{
-		String schemaName;
-		switch (getDatabaseType().getValue()) {
-		case 1://mssql
-			schemaName = sqlserverSchemaName;
-			break;
-		case 4://h2
-			schemaName = null;
-			break;
-		default:
-			schemaName = dbmd.getUserName();
-			break;
-		}
-		return schemaName;
 	}
 	
 	protected void execSql(String sql){

@@ -26,6 +26,12 @@ public class BackLogTest extends AbstractJUnit4SpringContextTests {
 		}
 	}
 	
+	@Test
+	public void test02(){
+		PFUser user= arcServcieImpl.getSingleUser("ROOT");
+		System.out.println(user.getUpassword());
+	}
+	
 
 	
 	

@@ -21,7 +21,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import ch.qos.logback.classic.Logger;
+import cn.ly.pojo.PFDept;
+import cn.ly.pojo.PFUser;
 import cn.ly.service.i.ArcService;
+import cn.ly.util.GlobalFinalAttr;
 
 @Controller
 public class CommonCtler {
@@ -32,23 +35,31 @@ public class CommonCtler {
 	public String gotoIndex() {
 		return "index.jsp";
 	}
+	//-------------------------------------------------
 	/**
 	 * login
 	 */
 	@RequestMapping(value="/login" , method = RequestMethod.POST)
 	public ModelAndView login(ModelMap modelMap, HttpServletRequest request, HttpServletResponse response,
 			@RequestParam("usercode") String usercode, @RequestParam("passwd") String passwd) {
-		System.out.println(usercode);
-		System.out.println(passwd);
-		if(usercode.equals("ROOT") && passwd.equals("ROOT")){
-			File[] listFile = new File(logHomeAdd).listFiles();
-			return new ModelAndView("listLog.jsp", "listFile", listFile);
+		if(StringUtils.isNotEmpty(usercode) && StringUtils.isNotEmpty(passwd)){
+			PFUser user = arcServcieImpl.getSingleUser(usercode);
+			if(user != null && user.getUpassword().equals(passwd)){
+				PFDept dept = arcServcieImpl.getDeptByDid(user.getPid());
+				File[] listFile = new File(logHomeAdd).listFiles();
+				request.getSession(true).setAttribute(GlobalFinalAttr.SESSION_USER , user);
+				request.getSession(true).setAttribute(GlobalFinalAttr.SESSION_DEPT , dept);
+				return new ModelAndView("listLog.jsp", "listFile", listFile);
+			}else{
+				return new ModelAndView("againlogin", "returnMsg", "用户名/密码错误");
+			}
 		}else{
 			return new ModelAndView("againlogin", "returnMsg", "登录失败");
 		}
 	}
 	
 	
+	//-------------------------------------------------
 	
 	/**
 	 * 列出所有日志 
