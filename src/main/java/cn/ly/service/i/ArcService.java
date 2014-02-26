@@ -30,4 +30,17 @@ public interface ArcService {
 	*/
 	public PFDept getDeptByDid(Integer did);
 	
+	/**
+	 * <p>Title: 得到同一个打分部门下的所有用户数</p>
+	 * <p>Description: </p>
+	 * @return
+	 * 
+	 * @date 2014年2月26日
+	*/
+	public Integer getADeptUserNum(Integer bmflag);
+	
+	/**
+	 * <p>Title: 根据用户得到当前季度他共计评分了多少人</p>
+	*/
+	public Integer getHasPfNum(PFUser user);
 }

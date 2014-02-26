@@ -1,13 +1,13 @@
 package cn.ly.dao.i;
 
-import cn.ly.dao.BaseDao;
-import cn.ly.pojo.PFUser;
-import cn.ly.pojo.PFUserExample;
-
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+
+import cn.ly.dao.BaseDao;
+import cn.ly.pojo.PFUser;
+import cn.ly.pojo.PFUserExample;
 
 public interface PFUserMapper extends BaseDao {
     int countByExample(PFUserExample example);

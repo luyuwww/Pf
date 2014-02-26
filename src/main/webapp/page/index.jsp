@@ -1,3 +1,4 @@
+<%@page import="cn.ly.util.GlobalFinalAttr"%>
 <%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -25,15 +26,12 @@ $(document).ready(function() {
 
 
 String.prototype.Trim = function(){return this.replace(/(^\s*)|(\s*$)/g,"");} 
-function aa(){
-	document.login.submit(); 
-}
+
 function gotoSubmit(){
 	var uname = $("#usercode").val().Trim();
 	var upwd = $("#passwd").val().Trim();
 	if(uname != "" && upwd != ""){
 		document.forms[0].submit();
-		aa();
 	}else{
 		alert("用户名密码,不可以为空!");
 		return false;
@@ -58,7 +56,7 @@ function gotoSubmit(){
 				   <div id="password">密   码
 				     <input type="password" id="passwd" name="passwd" />
 				   </div>
-				   <div id="btn"><a href="#" onclick="aa()">登录</a><a href="#">清空</a></div>
+				   <div id="btn"><a href="#" onclick="gotoSubmit()">登录</a><a href="#">清空</a></div>
 			  </div>
 			  <div id="center_right"></div>		 
 		 </div>

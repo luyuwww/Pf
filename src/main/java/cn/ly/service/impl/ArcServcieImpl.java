@@ -3,6 +3,7 @@ package cn.ly.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import cn.ly.dao.i.PFDeptMapper;
@@ -35,6 +36,17 @@ public class ArcServcieImpl extends BaseService implements ArcService {
 		return pFDeptMapper.selectByPrimaryKey(did);
 	}
 
+	public Integer getADeptUserNum(Integer bmflag){
+		return pFUserMapper.onDeptUserNum(bmflag);
+	}
+	public Integer getHasPfNum(PFUser user){
+		return pFUserMapper.getHasPfNum(quarter, user.getDid());
+	}
+	//当前季度
+	@Autowired
+	@Value("${pf.opert.quarter}")
+	private Byte quarter;
+	
 	@Autowired
 	private PFUserMapper pFUserMapper;
 	@Autowired

@@ -49,13 +49,42 @@ public class CommonCtler {
 				File[] listFile = new File(logHomeAdd).listFiles();
 				request.getSession(true).setAttribute(GlobalFinalAttr.SESSION_USER , user);
 				request.getSession(true).setAttribute(GlobalFinalAttr.SESSION_DEPT , dept);
-				return new ModelAndView("listLog.jsp", "listFile", listFile);
+				//取 2个数 1打过 2没打过的.
+				ModelAndView mvv = new ModelAndView();
+				mvv.addObject("listFile", listFile);
+				mvv.addObject("haspfnum", arcServcieImpl.getHasPfNum(user));
+				mvv.addObject("want2pfTotalNum", arcServcieImpl.getADeptUserNum(dept.getBmflag()));
+				mvv.setViewName("2button.jsp");
+				return mvv;
 			}else{
 				return new ModelAndView("againlogin", "returnMsg", "用户名/密码错误");
 			}
 		}else{
 			return new ModelAndView("againlogin", "returnMsg", "登录失败");
 		}
+	}
+	
+	/**
+	 * <p>Title: 查看已经评分过的</p>
+	*/
+	@RequestMapping(value="viewHasPF", method = RequestMethod.GET)
+	public ModelAndView viewHasPf(){
+		ModelAndView mvv = new ModelAndView();
+		mvv.setViewName("2button.jsp");
+		return mvv;
+	}
+	/**
+	 * <p>Title: 查看没有评分的</p>
+	 * <p>Description: </p>
+	 * @return
+	 * 
+	 * @date 2014年2月26日
+	*/
+	@RequestMapping(value="viewWant2PF", method = RequestMethod.GET)
+	public ModelAndView viewWant2PF(){
+		ModelAndView mvv = new ModelAndView();
+		mvv.setViewName("2button.jsp");
+		return mvv;
 	}
 	
 	
@@ -128,5 +157,9 @@ public class CommonCtler {
 	@Autowired
 	@Value("${interface.log.home.address}")
 	private String logHomeAdd;
+	//当前季度
+	@Autowired
+	@Value("${pf.opert.quarter}")
+	private Byte quarter;
 	private Logger log =  (Logger) LoggerFactory.getLogger(this.getClass());
 }
