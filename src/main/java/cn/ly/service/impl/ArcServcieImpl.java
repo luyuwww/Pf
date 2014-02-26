@@ -36,12 +36,21 @@ public class ArcServcieImpl extends BaseService implements ArcService {
 		return pFDeptMapper.selectByPrimaryKey(did);
 	}
 
-	public Integer getADeptUserNum(Integer bmflag){
-		return pFUserMapper.onDeptUserNum(bmflag);
+	public Integer getADeptUserNum(Integer bmflag , PFUser user){
+		return pFUserMapper.onDeptUserNum(bmflag , user.getDid());
 	}
 	public Integer getHasPfNum(PFUser user){
 		return pFUserMapper.getHasPfNum(quarter, user.getDid());
 	}
+	
+	public List<PFUser> getHasBePfList(PFUser user){
+		return pFUserMapper.getHasPfUserList(quarter, user.getDid());
+	}
+	
+	public List<PFUser> getNoBePfList(PFUser user , PFDept dept){
+		return pFUserMapper.getNoBePfList(dept.getBmflag(), user.getDid(), quarter);
+	}
+	
 	//当前季度
 	@Autowired
 	@Value("${pf.opert.quarter}")

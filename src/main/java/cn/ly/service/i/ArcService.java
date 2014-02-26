@@ -6,6 +6,13 @@ import javax.jws.WebService;
 
 import cn.ly.pojo.PFDept;
 import cn.ly.pojo.PFUser;
+/**
+ * <p>Title: ArcService</p>
+ * <p>Description: </p>
+ *
+ * @author luyuwww
+ * @date 2014年2月26日
+ */
 @WebService
 public interface ArcService {
 	
@@ -37,10 +44,20 @@ public interface ArcService {
 	 * 
 	 * @date 2014年2月26日
 	*/
-	public Integer getADeptUserNum(Integer bmflag);
+	public Integer getADeptUserNum(Integer bmflag , PFUser user);
 	
 	/**
 	 * <p>Title: 根据用户得到当前季度他共计评分了多少人</p>
 	*/
 	public Integer getHasPfNum(PFUser user);
+	
+	
+	/**
+	 * <p>Title: 得到本季度已经被评分的用户列表</p>
+	*/
+	public List<PFUser> getHasBePfList(PFUser user);
+	/**
+	 * <p>Title: 得到本季度未被评分的用户列表</p>
+	*/
+	public List<PFUser> getNoBePfList(PFUser user , PFDept dept);
 }

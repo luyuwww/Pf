@@ -53,7 +53,7 @@ public class CommonCtler {
 				ModelAndView mvv = new ModelAndView();
 				mvv.addObject("listFile", listFile);
 				mvv.addObject("haspfnum", arcServcieImpl.getHasPfNum(user));
-				mvv.addObject("want2pfTotalNum", arcServcieImpl.getADeptUserNum(dept.getBmflag()));
+				mvv.addObject("want2pfTotalNum", arcServcieImpl.getADeptUserNum(dept.getBmflag() , user));
 				mvv.setViewName("2button.jsp");
 				return mvv;
 			}else{
@@ -68,26 +68,43 @@ public class CommonCtler {
 	 * <p>Title: 查看已经评分过的</p>
 	*/
 	@RequestMapping(value="viewHasPF", method = RequestMethod.GET)
-	public ModelAndView viewHasPf(){
+	public ModelAndView viewHasPf(HttpServletRequest request){
+		PFUser user = (PFUser) request.getSession().getAttribute(GlobalFinalAttr.SESSION_USER);
 		ModelAndView mvv = new ModelAndView();
-		mvv.setViewName("2button.jsp");
+		mvv.addObject("hasBePfUserList" , arcServcieImpl.getHasBePfList(user));
+		mvv.setViewName("hasBePfUserList.jsp");
 		return mvv;
 	}
 	/**
 	 * <p>Title: 查看没有评分的</p>
-	 * <p>Description: </p>
-	 * @return
-	 * 
 	 * @date 2014年2月26日
 	*/
 	@RequestMapping(value="viewWant2PF", method = RequestMethod.GET)
-	public ModelAndView viewWant2PF(){
+	public ModelAndView viewWant2PF(HttpServletRequest request){
+		PFUser user = (PFUser) request.getSession().getAttribute(GlobalFinalAttr.SESSION_USER);
+		PFDept dept = (PFDept) request.getSession().getAttribute(GlobalFinalAttr.SESSION_DEPT);;
 		ModelAndView mvv = new ModelAndView();
-		mvv.setViewName("2button.jsp");
+		mvv.addObject("noBePfUserList" , arcServcieImpl.getNoBePfList(user, dept));
+		mvv.setViewName("noBePfUserList.jsp");
 		return mvv;
 	}
 	
-	
+	/**
+	 * <p>Title: 跳转到评分页面</p>
+	*/
+	@RequestMapping(value="gotoPf")
+	public ModelAndView gotoPfPage(HttpServletRequest request , @RequestParam("bePfUserCode") String bePfUserCode ){
+		PFUser user = (PFUser) request.getSession().getAttribute(GlobalFinalAttr.SESSION_USER);
+		PFUser buser = arcServcieImpl.getSingleUser(bePfUserCode);
+		PFDept bdept = arcServcieImpl.getDeptByDid(buser.getPid());
+		ModelAndView mvv = new ModelAndView();
+		mvv.addObject("operuser" , user);
+		mvv.addObject("boperuser" , buser);
+		mvv.addObject("boperuserdept" , bdept);
+		mvv.addObject("kaoheqi" , kaoHeQi);//考核期
+		mvv.setViewName("dafeng.jsp");
+		return mvv;
+	}
 	//-------------------------------------------------
 	
 	/**
@@ -161,5 +178,8 @@ public class CommonCtler {
 	@Autowired
 	@Value("${pf.opert.quarter}")
 	private Byte quarter;
+	@Autowired
+	@Value("${pf.opert.quarter.ch}")
+	private String kaoHeQi;
 	private Logger log =  (Logger) LoggerFactory.getLogger(this.getClass());
 }
