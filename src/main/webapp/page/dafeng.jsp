@@ -388,8 +388,8 @@ function gotoSubmit(){
 	</table>
 	<p align="center">
 	<form action="savePf" method="post">
-		<input name="grade" type="hidden"/>
-		<input name="bPfUserDid" type="hidden" value="${boperuser.did}"/>
+		<input name="grade" id="grade" type="hidden" value="0.0"/>
+		<input name="bPfUserDid" id="bPfUserDid" type="hidden" value="${boperuser.did}"/>
 		<a class="btn btn-lg btn-success" onclick="gotoSubmit()">提交</a>
 	</form>
 	</p>

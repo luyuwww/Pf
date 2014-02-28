@@ -81,7 +81,7 @@ public class CommonCtler {
 	 * <p>Title: 查看没有评分的</p>
 	 * @date 2014年2月26日
 	*/
-	@RequestMapping(value="viewWant2PF", method = RequestMethod.GET)
+	@RequestMapping(value="viewWant2PF")
 	public ModelAndView viewWant2PF(HttpServletRequest request){
 		PFUser user = (PFUser) request.getSession().getAttribute(GlobalFinalAttr.SESSION_USER);
 		PFDept dept = (PFDept) request.getSession().getAttribute(GlobalFinalAttr.SESSION_DEPT);;
@@ -112,31 +112,28 @@ public class CommonCtler {
 	 * <p>Title: 保存评分 todo</p>
 	 */
 	@RequestMapping(value="savePf" , method = RequestMethod.POST)
-	public ModelAndView savePf(HttpServletRequest request , @RequestParam("bPfUserDid") Integer bPfUserDid
-			, @RequestParam("grade") Float grade){
-		if(grade == null){
-			return new ModelAndView("viewWant2PF", "returnMsg", "保存失败,打分为空");
+	public String savePf(HttpServletRequest request , @RequestParam("bPfUserDid") Integer bPfUserDid
+			, @RequestParam("grade") Float grade ,  Model model){
+		if(grade == null || grade.equals(0.0f)){
+			model.addAttribute( "returnMsg",  "保存失败,打分为空.");
+			return  "forward:/viewWant2PF";
 		}else{
 			PFUser user = (PFUser) request.getSession().getAttribute(GlobalFinalAttr.SESSION_USER);
 			PFUser buser = arcServcieImpl.getSingleUserDid(bPfUserDid);
-			
 			PFGrade pfGrade = new PFGrade();
-			
 			pfGrade.setBoperusercode(buser.getUusercode());
 			pfGrade.setBoperuserdid(buser.getDid());
 			pfGrade.setBoperusername(buser.getUusername());
-			
 			pfGrade.setOperusercode(user.getUusercode());
 			pfGrade.setOperuserdid(user.getDid());
 			pfGrade.setOperusername(user.getUusername());
-			
 			pfGrade.setOpertiime(new Date());
 			pfGrade.setOperquarter(quarter);
 			pfGrade.setTaccount(grade);
 			pfGrade.setIsok((byte)1);
-			
 			arcServcieImpl.saveGrade(pfGrade);
-			return new ModelAndView("viewWant2PF", "returnMsg", "保存成功");
+			model.addAttribute( "returnMsg", "保存成功");
+			return  "forward:/viewWant2PF";
 		}
 	}
 	//-------------------------------------------------
