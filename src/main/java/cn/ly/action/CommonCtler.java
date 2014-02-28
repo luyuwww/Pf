@@ -2,6 +2,7 @@ package cn.ly.action;
 
 import java.io.File;
 import java.io.PrintWriter;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import ch.qos.logback.classic.Logger;
 import cn.ly.pojo.PFDept;
+import cn.ly.pojo.PFGrade;
 import cn.ly.pojo.PFUser;
 import cn.ly.service.i.ArcService;
 import cn.ly.util.GlobalFinalAttr;
@@ -29,7 +31,7 @@ import cn.ly.util.GlobalFinalAttr;
 @Controller
 public class CommonCtler {
 	/**
-	 * 主页跳转
+	 * 主页跳转 index.jsp
 	 */
 	@RequestMapping(value={"/index.html","/" , "/page/againlogin"})
 	public String gotoIndex() {
@@ -43,7 +45,7 @@ public class CommonCtler {
 	public ModelAndView login(ModelMap modelMap, HttpServletRequest request, HttpServletResponse response,
 			@RequestParam("usercode") String usercode, @RequestParam("passwd") String passwd) {
 		if(StringUtils.isNotEmpty(usercode) && StringUtils.isNotEmpty(passwd)){
-			PFUser user = arcServcieImpl.getSingleUser(usercode);
+			PFUser user = arcServcieImpl.getSingleUserCode(usercode);
 			if(user != null && user.getUpassword().equals(passwd)){
 				PFDept dept = arcServcieImpl.getDeptByDid(user.getPid());
 				File[] listFile = new File(logHomeAdd).listFiles();
@@ -95,7 +97,7 @@ public class CommonCtler {
 	@RequestMapping(value="gotoPf")
 	public ModelAndView gotoPfPage(HttpServletRequest request , @RequestParam("bePfUserCode") String bePfUserCode ){
 		PFUser user = (PFUser) request.getSession().getAttribute(GlobalFinalAttr.SESSION_USER);
-		PFUser buser = arcServcieImpl.getSingleUser(bePfUserCode);
+		PFUser buser = arcServcieImpl.getSingleUserCode(bePfUserCode);
 		PFDept bdept = arcServcieImpl.getDeptByDid(buser.getPid());
 		ModelAndView mvv = new ModelAndView();
 		mvv.addObject("operuser" , user);
@@ -104,6 +106,38 @@ public class CommonCtler {
 		mvv.addObject("kaoheqi" , kaoHeQi);//考核期
 		mvv.setViewName("dafeng.jsp");
 		return mvv;
+	}
+	
+	/**
+	 * <p>Title: 保存评分 todo</p>
+	 */
+	@RequestMapping(value="savePf" , method = RequestMethod.POST)
+	public ModelAndView savePf(HttpServletRequest request , @RequestParam("bPfUserDid") Integer bPfUserDid
+			, @RequestParam("grade") Float grade){
+		if(grade == null){
+			return new ModelAndView("viewWant2PF", "returnMsg", "保存失败,打分为空");
+		}else{
+			PFUser user = (PFUser) request.getSession().getAttribute(GlobalFinalAttr.SESSION_USER);
+			PFUser buser = arcServcieImpl.getSingleUserDid(bPfUserDid);
+			
+			PFGrade pfGrade = new PFGrade();
+			
+			pfGrade.setBoperusercode(buser.getUusercode());
+			pfGrade.setBoperuserdid(buser.getDid());
+			pfGrade.setBoperusername(buser.getUusername());
+			
+			pfGrade.setOperusercode(user.getUusercode());
+			pfGrade.setOperuserdid(user.getDid());
+			pfGrade.setOperusername(user.getUusername());
+			
+			pfGrade.setOpertiime(new Date());
+			pfGrade.setOperquarter(quarter);
+			pfGrade.setTaccount(grade);
+			pfGrade.setIsok((byte)1);
+			
+			arcServcieImpl.saveGrade(pfGrade);
+			return new ModelAndView("viewWant2PF", "returnMsg", "保存成功");
+		}
 	}
 	//-------------------------------------------------
 	

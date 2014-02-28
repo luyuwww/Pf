@@ -1,7 +1,6 @@
 package cn.ly.pojo;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.Date;
 
 public class PFGrade implements Serializable {
@@ -15,7 +14,7 @@ public class PFGrade implements Serializable {
 
     private Byte operquarter;
 
-    private BigDecimal taccount;
+    private Float taccount;
 
     private Byte isok;
 
@@ -69,11 +68,11 @@ public class PFGrade implements Serializable {
         this.operquarter = operquarter;
     }
 
-    public BigDecimal getTaccount() {
+    public Float getTaccount() {
         return taccount;
     }
 
-    public void setTaccount(BigDecimal taccount) {
+    public void setTaccount(Float taccount) {
         this.taccount = taccount;
     }
 

@@ -23,17 +23,20 @@ $(function(){
 	        	totleGrade+=new Number($(this).val());
 	        });
 	    });
-	   $("#totalGrade").val(totleGrade);
+	   $("#grade").val(totleGrade);
 	   $("#totalGradeTD").html(totleGrade);
 	});
 });
+
+function gotoSubmit(){
+	$("form").submit();
+}
 </script>
 
 <body>
 <div align="center">
 	<h2>个人绩效考核责任打分表</h2>
 	被考核人：${boperuserdept.dname}-${boperuser.uusername}  (考核期：${kaoheqi}) 考核人：${operuser.uusername}
-	<form action="">
 	<table cellspacing="0" cellpadding="0" border="1">
 	  <col width="93" />
 	  <col width="790" />
@@ -384,11 +387,13 @@ $(function(){
 	  </tr>
 	</table>
 	<p align="center">
-      <input id="totalGrade" type="hidden"/>
-	  <input name="单位/部门季度考核2" type="submit" onclick="" value="关闭" />
+	<form action="savePf" method="post">
+		<input name="grade" type="hidden"/>
+		<input name="bPfUserDid" type="hidden" value="${boperuser.did}"/>
+		<a class="btn btn-lg btn-success" onclick="gotoSubmit()">提交</a>
+	</form>
 	</p>
 </div>
-</form>
 </body>
 </html>
 

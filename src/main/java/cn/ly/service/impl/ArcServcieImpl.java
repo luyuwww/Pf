@@ -7,8 +7,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import cn.ly.dao.i.PFDeptMapper;
+import cn.ly.dao.i.PFGradeMapper;
 import cn.ly.dao.i.PFUserMapper;
 import cn.ly.pojo.PFDept;
+import cn.ly.pojo.PFGrade;
 import cn.ly.pojo.PFUser;
 import cn.ly.pojo.PFUserExample;
 import cn.ly.service.BaseService;
@@ -19,8 +21,12 @@ public class ArcServcieImpl extends BaseService implements ArcService {
 	public List<PFUser> listAllUser() {
 		return pFUserMapper.getAllUserList();
 	}
+	
+	public PFUser getSingleUserDid(Integer userDid){
+		return pFUserMapper.selectByPrimaryKey(userDid);
+	}
 
-	public PFUser getSingleUser(String uusercode) {
+	public PFUser getSingleUserCode(String uusercode) {
 		PFUserExample userEx = new PFUserExample();
 		userEx.createCriteria().andUusercodeEqualTo(uusercode);
 		List<PFUser> results = pFUserMapper.selectByExample(userEx);
@@ -51,6 +57,11 @@ public class ArcServcieImpl extends BaseService implements ArcService {
 		return pFUserMapper.getNoBePfList(dept.getBmflag(), user.getDid(), quarter);
 	}
 	
+	public void saveGrade(PFGrade grade){
+		pFGradeMapper.insertSelective(grade);
+		
+	}
+	
 	//当前季度
 	@Autowired
 	@Value("${pf.opert.quarter}")
@@ -60,4 +71,6 @@ public class ArcServcieImpl extends BaseService implements ArcService {
 	private PFUserMapper pFUserMapper;
 	@Autowired
 	private PFDeptMapper pFDeptMapper;
+	@Autowired
+	private PFGradeMapper pFGradeMapper;
 }

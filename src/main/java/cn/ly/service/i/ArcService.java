@@ -5,6 +5,7 @@ import java.util.List;
 import javax.jws.WebService;
 
 import cn.ly.pojo.PFDept;
+import cn.ly.pojo.PFGrade;
 import cn.ly.pojo.PFUser;
 /**
  * <p>Title: ArcService</p>
@@ -22,10 +23,16 @@ public interface ArcService {
 	public List<PFUser> listAllUser();
 	
 	/**
-	 * <p>Title: 登录使用得到单个用户</p>
+	 * <p>Title: 登录使用得到单个用户通过usercode</p>
 	 * @date 2014年2月24日
 	*/
-	public PFUser getSingleUser(String uusercode);
+	public PFUser getSingleUserCode(String uusercode);
+	
+	/**
+	 * <p>Title: 登录使用得到单个用户通过userdid</p>
+	 * @date 2014年2月24日
+	 */
+	public PFUser getSingleUserDid(Integer userDid);
 	
 	/**
 	 * <p>Title: 通过did得到部门</p>
@@ -60,4 +67,10 @@ public interface ArcService {
 	 * <p>Title: 得到本季度未被评分的用户列表</p>
 	*/
 	public List<PFUser> getNoBePfList(PFUser user , PFDept dept);
+	
+	/**
+	 * <p>Title: 插入一个可选成绩</p>
+	 * @date 2014年2月28日
+	*/
+	public void saveGrade(PFGrade grade);
 }

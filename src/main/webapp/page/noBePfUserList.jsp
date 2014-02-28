@@ -10,6 +10,17 @@
 	    <link href="${pageContext.request.contextPath}/res/js/bootstrap-3.0.3-dist/css/bootstrap-theme.min.css" rel="stylesheet">
 	    <link href="${pageContext.request.contextPath}/res/js/self/theme.css" rel="stylesheet">
         <link href="${pageContext.request.contextPath}/res/js/self/grid.css" rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/res/img/login/login.css" rel="stylesheet" type="text/css" />
+		<script src="${pageContext.request.contextPath}/res/js/jquery1.10.2/jquery-1.10.2.min.js" type="text/javascript"></script> 
+		<script type="text/javascript">
+			$(document).ready(function() {
+				//打印后台信息
+				if('${returnMsg}'!=""){
+					alert('${returnMsg}');
+				}
+				
+			});
+		</script>
 	</head>
 	<body>
 		<div class="container">
