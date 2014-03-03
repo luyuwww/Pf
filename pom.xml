@@ -24,8 +24,6 @@
 				<artifactId>maven-jetty-plugin</artifactId>
 				<version>6.1.26</version>
 				<configuration>
-					<webDefaultXml>src/test/resources/webdefault.xml</webDefaultXml>
-					<jettyEnvXml>src/test/resources/jetty.xml</jettyEnvXml>
 					<webAppSourceDirectory>src/main/webapp</webAppSourceDirectory>
 					<scanIntervalSeconds>0</scanIntervalSeconds>
 				</configuration>
