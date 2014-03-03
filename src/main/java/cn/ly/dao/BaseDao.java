@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
+import cn.ly.pojo.PFGrade;
 import cn.ly.pojo.PFUser;
 
 @Repository
@@ -83,4 +84,13 @@ public interface BaseDao{
 	*/
 	@Select("SELECT * FROM PF_USER WHERE DID IN (SELECT BOPERUSERDID FROM PF_GRADE WHERE OPERQUARTER=${quarter} AND OPERUSERDID=${userdid})")
 	List<PFUser> getHasPfUserList(@Param("quarter") Byte quarter , @Param("userdid") Integer userdid);
+	
+    /**
+     * <p>Title: 得到所有人的成绩</p>
+     * <p>Description: </p>
+     * @date 2014年3月3日
+    */
+    @Select("SELECT BOPERUSERCODE ,BOPERUSERNAME ,SUM(TACCOUNT) TACCOUNT FROM PF_GRADE GROUP BY"
+    		+ " BOPERUSERCODE ,BOPERUSERNAME ORDER BY BOPERUSERCODE")
+    List<PFGrade> getTotalPersonGrade();
 }

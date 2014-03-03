@@ -61,6 +61,9 @@ public class ArcServcieImpl extends BaseService implements ArcService {
 		pFGradeMapper.insertSelective(grade);
 		
 	}
+	public List<PFGrade> getTotalGrade() {
+		return pFUserMapper.getTotalPersonGrade();
+	}
 	
 	//当前季度
 	@Autowired

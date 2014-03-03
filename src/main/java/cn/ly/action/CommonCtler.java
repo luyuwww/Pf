@@ -2,6 +2,7 @@ package cn.ly.action;
 
 import java.io.File;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -54,6 +55,7 @@ public class CommonCtler {
 				//取 2个数 1打过 2没打过的.
 				ModelAndView mvv = new ModelAndView();
 				mvv.addObject("listFile", listFile);
+				mvv.addObject("currntUserCode", usercode);
 				mvv.addObject("haspfnum", arcServcieImpl.getHasPfNum(user));
 				mvv.addObject("want2pfTotalNum", arcServcieImpl.getADeptUserNum(dept.getBmflag() , user));
 				mvv.setViewName("2button.jsp");
@@ -88,6 +90,24 @@ public class CommonCtler {
 		ModelAndView mvv = new ModelAndView();
 		mvv.addObject("noBePfUserList" , arcServcieImpl.getNoBePfList(user, dept));
 		mvv.setViewName("noBePfUserList.jsp");
+		return mvv;
+	}
+	/**
+	 * <p>Title: 查看所有用户的总成绩</p>
+	 * @date 2014年2月26日
+	 */
+	@RequestMapping(value="viewAllGrade")
+	public ModelAndView viewAllGrade(HttpServletRequest request){
+		PFUser user = (PFUser) request.getSession().getAttribute(GlobalFinalAttr.SESSION_USER);
+		ModelAndView mvv = new ModelAndView();
+		List<PFGrade> pfGradList = null;
+		if(user.getUusercode().equals("ROOT")){
+			pfGradList = arcServcieImpl.getTotalGrade();
+		}else{//如果不是bug这个页面是进不了 else的
+			pfGradList = new ArrayList<PFGrade>();
+		}
+		mvv.addObject("totalGradeList" , pfGradList);
+		mvv.setViewName("totalGradeList.jsp");
 		return mvv;
 	}
 	

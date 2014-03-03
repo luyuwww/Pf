@@ -73,4 +73,10 @@ public interface ArcService {
 	 * @date 2014年2月28日
 	*/
 	public void saveGrade(PFGrade grade);
+	
+	/**
+	 * <p>Title: 得到所有用户的分数</p>
+	 * @date 2014年3月3日
+	*/
+	public List<PFGrade> getTotalGrade();
 }
