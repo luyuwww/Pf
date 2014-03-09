@@ -17,8 +17,7 @@
 			<c:forEach var="user" items="${hasBePfUserList}" varStatus="count">
 				<div class="row">
 					<div class="col-md-1">${count.index+1}</div>
-					<div class="col-md-4">${user.boperusername}</div>
-					<div class="col-md-1">${user.taccount}</div>
+					<div class="col-md-4">${user.uusername}</div>
 				</div>
 			</c:forEach>
 			<a class="btn btn-lg" href="${pageContext.request.contextPath}/goto2Button">返回</a>

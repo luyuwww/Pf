@@ -4,10 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 public class PFGrade implements Serializable {
-    /** serialVersionUID*/
-	private static final long serialVersionUID = 7526188246471752416L;
-
-	private Integer did;
+    private Integer did;
 
     private String operusercode;
 
@@ -28,6 +25,8 @@ public class PFGrade implements Serializable {
     private String operusername;
 
     private String boperusername;
+
+    private static final long serialVersionUID = 1L;
 
     public Integer getDid() {
         return did;

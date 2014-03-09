@@ -62,7 +62,7 @@ public interface ArcService {
 	/**
 	 * <p>Title: 得到本季度已经被评分的用户列表</p>
 	*/
-	public List<PFGrade> getHasBePfList(PFUser user);
+	public List<PFUser> getHasBePfList(PFUser user);
 	/**
 	 * <p>Title: 得到本季度未被评分的用户列表</p>
 	*/

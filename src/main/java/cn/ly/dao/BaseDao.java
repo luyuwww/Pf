@@ -79,11 +79,11 @@ public interface BaseDao{
 			+ "AND DID NOT IN (SELECT BOPERUSERDID FROM PF_GRADE WHERE OPERUSERDID=${userdid} AND OPERQUARTER=${quarter})")
 	List<PFUser> getNoBePfList(@Param("bmflag") Integer bmflag , @Param("userdid") Integer userdid , @Param("quarter")Byte quarter);
 	
-//	/**
-//	 * <p>Title: 得到已经评分的userlist</p>
-//	*/
-//	@Select("SELECT * FROM PF_USER WHERE DID IN (SELECT BOPERUSERDID FROM PF_GRADE WHERE OPERQUARTER=${quarter} AND OPERUSERDID=${userdid})")
-//	List<PFUser> getHasPfUserList(@Param("quarter") Byte quarter , @Param("userdid") Integer userdid);
+	/**
+	 * <p>Title: 得到已经评分的userlist</p>
+	*/
+	@Select("SELECT * FROM PF_USER WHERE DID IN (SELECT BOPERUSERDID FROM PF_GRADE WHERE OPERQUARTER=${quarter} AND OPERUSERDID=${userdid})")
+	List<PFUser> getHasPfUserList(@Param("quarter") Byte quarter , @Param("userdid") Integer userdid);
 	
     /**
      * <p>Title: 得到所有人的成绩</p>
@@ -93,12 +93,4 @@ public interface BaseDao{
     @Select("SELECT BOPERUSERCODE ,BOPERUSERNAME ,SUM(TACCOUNT) TACCOUNT FROM PF_GRADE GROUP BY"
     		+ " BOPERUSERCODE ,BOPERUSERNAME ORDER BY BOPERUSERCODE")
     List<PFGrade> getTotalPersonGrade();
-    
-    /**
-     * <p>Title: 得到所有人的成绩</p>
-     * <p>Description: </p>
-     * @date 2014年3月3日
-    */
-    @Select("SELECT * FROM PF_GRADE WHERE OPERUSERCODE='${operusercode}'  AND OPERQUARTER=${quarter}")
-    List<PFGrade> getHasPfUserList( @Param("operusercode") String operusercode , @Param("quarter")Byte quarter);
 }
