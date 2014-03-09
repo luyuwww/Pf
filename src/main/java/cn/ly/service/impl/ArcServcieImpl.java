@@ -49,8 +49,8 @@ public class ArcServcieImpl extends BaseService implements ArcService {
 		return pFUserMapper.getHasPfNum(quarter, user.getDid());
 	}
 	
-	public List<PFUser> getHasBePfList(PFUser user){
-		return pFUserMapper.getHasPfUserList(quarter, user.getDid());
+	public List<PFGrade> getHasBePfList(PFUser user){
+		return pFUserMapper.getHasPfUserList(user.getUusercode() , quarter);
 	}
 	
 	public List<PFUser> getNoBePfList(PFUser user , PFDept dept){

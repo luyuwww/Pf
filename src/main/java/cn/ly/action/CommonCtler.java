@@ -35,8 +35,14 @@ public class CommonCtler {
 	 * 主页跳转 index.jsp
 	 */
 	@RequestMapping(value={"/index.html","/" , "/page/againlogin"})
-	public String gotoIndex() {
-		return "index.jsp";
+	public String gotoIndex( HttpServletRequest request) {
+		PFUser user = (PFUser) request.getSession(true).getAttribute(GlobalFinalAttr.SESSION_USER );
+		PFDept dept = (PFDept) request.getSession(true).getAttribute(GlobalFinalAttr.SESSION_DEPT );
+		if(user !=  null && dept != null){
+			return "redirect:goto2Button";
+		}else{
+			return "index.jsp";
+		}
 	}
 	//-------------------------------------------------
 	/**
@@ -49,16 +55,11 @@ public class CommonCtler {
 			PFUser user = arcServcieImpl.getSingleUserCode(usercode);
 			if(user != null && user.getUpassword().equals(passwd)){
 				PFDept dept = arcServcieImpl.getDeptByDid(user.getPid());
-				File[] listFile = new File(logHomeAdd).listFiles();
 				request.getSession(true).setAttribute(GlobalFinalAttr.SESSION_USER , user);
 				request.getSession(true).setAttribute(GlobalFinalAttr.SESSION_DEPT , dept);
 				//取 2个数 1打过 2没打过的.
 				ModelAndView mvv = new ModelAndView();
-				mvv.addObject("listFile", listFile);
-				mvv.addObject("currntUserCode", usercode);
-				mvv.addObject("haspfnum", arcServcieImpl.getHasPfNum(user));
-				mvv.addObject("want2pfTotalNum", arcServcieImpl.getADeptUserNum(dept.getBmflag() , user));
-				mvv.setViewName("2button.jsp");
+				mvv.setViewName("redirect:goto2Button");
 				return mvv;
 			}else{
 				return new ModelAndView("againlogin", "returnMsg", "用户名/密码错误");
@@ -67,6 +68,31 @@ public class CommonCtler {
 			return new ModelAndView("againlogin", "returnMsg", "登录失败");
 		}
 	}
+	/**
+	 * login --> redirect 2button
+	 */
+	@RequestMapping(value="/goto2Button" , method = RequestMethod.GET)
+	public ModelAndView goto2Button(ModelMap modelMap, HttpServletRequest request) {
+		PFUser user = (PFUser) request.getSession(true).getAttribute(GlobalFinalAttr.SESSION_USER );
+		PFDept dept = (PFDept) request.getSession(true).getAttribute(GlobalFinalAttr.SESSION_DEPT );
+		if(user !=  null && dept != null){
+			File[] listFile = new File(logHomeAdd).listFiles();
+			request.getSession(true).setAttribute(GlobalFinalAttr.SESSION_USER , user);
+			request.getSession(true).setAttribute(GlobalFinalAttr.SESSION_DEPT , dept);
+			//取 2个数 1打过 2没打过的.
+			ModelAndView mvv = new ModelAndView();
+			mvv.addObject("listFile", listFile);
+			mvv.addObject("currntUserCode", user.getUusercode());
+			mvv.addObject("haspfnum", arcServcieImpl.getHasPfNum(user));
+			mvv.addObject("want2pfTotalNum", arcServcieImpl.getADeptUserNum(dept.getBmflag() , user));
+			mvv.setViewName("2button.jsp");
+			return mvv;
+		}else{
+			return new ModelAndView("againlogin", "returnMsg", "连接失效请重新登录");
+		}
+	}
+	
+	
 	
 	/**
 	 * <p>Title: 查看已经评分过的</p>
@@ -129,7 +155,7 @@ public class CommonCtler {
 	}
 	
 	/**
-	 * <p>Title: 保存评分 todo</p>
+	 * <p>Title: 保存评分</p>
 	 */
 	@RequestMapping(value="savePf" , method = RequestMethod.POST)
 	public String savePf(HttpServletRequest request , @RequestParam("bPfUserDid") Integer bPfUserDid
