@@ -20,6 +20,7 @@
 					<div class="col-md-4">${user.uusername}</div>
 				</div>
 			</c:forEach>
+			<a class="btn btn-lg" href="${pageContext.request.contextPath}/goto2Button">返回</a>
 		</div>
 	</body>
 </html>
