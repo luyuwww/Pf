@@ -60,10 +60,10 @@ public interface BaseDao{
 	void dropTable(@Param("tableName") String tableName);
 	
 	/**
-	 * <p>Title: 得到同一个打分级别的共有多少需要被打分,不包含uLEVEL==1的</p>
+	 * <p>Title: 得到同一个打分级别的共有多少需要被打分,不包含uLEVEL=1 和4 的</p>
 	 * @date 2014年2月26日
 	*/
-	@Select("SELECT COUNT(*) FROM PF_USER WHERE PID IN (SELECT DID FROM PF_DEPT WHERE BMFLAG=${bmflag}) AND ULEVEL <> 1 AND DID<>${userdid}")
+	@Select("SELECT COUNT(*) FROM PF_USER WHERE PID IN (SELECT DID FROM PF_DEPT WHERE BMFLAG=${bmflag}) AND ULEVEL <> 1 AND ULEVEL <> 4 AND DID<>${userdid}")
 	Integer onDeptUserNum(@Param("bmflag") Integer bmflag, @Param("userdid") Integer userdid);
 	
 	/**

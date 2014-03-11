@@ -19,8 +19,8 @@
 			<a class="btn btn-lg btn-danger"
 	 			href="${pageContext.request.contextPath}/viewWant2PF">你还需评分(${want2pfTotalNum-haspfnum})</a>
 	 		<c:if test="${currntUserCode == 'ROOT'}"><!-- root才可以查看所有 -->
-	 			<br>
-				<a class="btn btn-lg btn-warn"
+	 			<br><br>
+				<a class="btn btn-lg btn-warning"
 		 			href="${pageContext.request.contextPath}/viewAllGrade">查看所有用后分数</a>
 	 		</c:if>
 		</div>

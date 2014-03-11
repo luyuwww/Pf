@@ -1,0 +1,112 @@
+<%@ page language="java" contentType="text/html; charset=utf-8"
+	pageEncoding="utf-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>日志列表</title>
+<link
+	href="${pageContext.request.contextPath}/res/js/bootstrap-3.0.3-dist/css/bootstrap.css"
+	rel="stylesheet">
+<link
+	href="${pageContext.request.contextPath}/res/js/bootstrap-3.0.3-dist/css/bootstrap-theme.min.css"
+	rel="stylesheet">
+<link href="${pageContext.request.contextPath}/res/js/self/theme.css"
+	rel="stylesheet">
+<link href="${pageContext.request.contextPath}/res/js/self/grid.css"
+	rel="stylesheet">
+</head>
+<body>
+	<div class="container">
+		<table class="table table-hover">
+			<caption>Table基本案例</caption>
+			<thead>
+				<tr>
+					<th>First Name</th>
+					<th>Last Name</th>
+					<th>User Name</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>aehyok</td>
+					<td>leo</td>
+					<td>@aehyok</td>
+				</tr>
+				<tr>
+					<td>lynn</td>
+					<td>thl</td>
+					<td>@lynn</td>
+				</tr>
+				<tr>
+					<td>aehyok</td>
+					<td>leo</td>
+					<td>@aehyok</td>
+				</tr>
+				<tr>
+					<td>lynn</td>
+					<td>thl</td>
+					<td>@lynn</td>
+				</tr>
+				<tr>
+					<td>aehyok</td>
+					<td>leo</td>
+					<td>@aehyok</td>
+				</tr>
+				<tr>
+					<td>lynn</td>
+					<td>thl</td>
+					<td>@lynn</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div class="table-responsive">
+		<table class="table">
+			<caption>Table</caption>
+			<thead>
+				<tr>
+					<th>#</th>
+					<th>First Name</th>
+					<th>Last Name</th>
+					<th>User Name</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr class="active">
+					<td>1</td>
+					<td>aehyok</td>
+					<td>leo</td>
+					<td>@aehyok</td>
+				</tr>
+				<tr class="success">
+					<td>2</td>
+					<td>lynn</td>
+					<td>thl</td>
+					<td>@lynn</td>
+				</tr>
+				<tr class="warning">
+					<td>3</td>
+					<td>Amdy</td>
+					<td>Amy</td>
+					<td>@Amdy</td>
+				</tr>
+				<tr class="danger">
+					<td>4</td>
+					<td>Amdy</td>
+					<td>Amy</td>
+					<td>@Amdy</td>
+				</tr>
+				<tr>
+					<td class="success">5</td>
+					<td class="danger">Amdy</td>
+					<td class="warning">Amy</td>
+					<td class="active">@Amdy</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+</html>

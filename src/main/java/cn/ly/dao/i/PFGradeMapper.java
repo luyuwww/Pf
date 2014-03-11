@@ -1,12 +1,12 @@
 package cn.ly.dao.i;
 
-import cn.ly.dao.BaseDao;
-import cn.ly.pojo.PFGrade;
-import cn.ly.pojo.PFGradeExample;
-
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
+
+import cn.ly.dao.BaseDao;
+import cn.ly.pojo.PFGrade;
+import cn.ly.pojo.PFGradeExample;
 
 public interface PFGradeMapper  extends BaseDao{
     int countByExample(PFGradeExample example);

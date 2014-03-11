@@ -1,12 +1,12 @@
 package cn.ly.dao.i;
 
-import cn.ly.dao.BaseDao;
-import cn.ly.pojo.PFDept;
-import cn.ly.pojo.PFDeptExample;
-
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
+
+import cn.ly.dao.BaseDao;
+import cn.ly.pojo.PFDept;
+import cn.ly.pojo.PFDeptExample;
 
 public interface PFDeptMapper  extends BaseDao{
     int countByExample(PFDeptExample example);

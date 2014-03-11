@@ -3,32 +3,61 @@ package cn.ly.pojo;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * <p>Title: 页面显示成绩</p>
+ * <p>Description: </p>
+ *
+ * @author luyuwww
+ * @date 2014年3月11日
+ */
 public class ViewGrade implements Serializable {
 	private static final long serialVersionUID = 7526188246471752416L;
 
     private String operusercode;
 
     private String boperusercode;
+    
+    private String beOperUserDepName;
+    
+    private Integer beOperUserDepDid;
+    
+    private String operUserDepName;
+    
+    private Integer operUserDepDid;
 
     private Date opertiime;
 
     private Byte operquarter;
 
-    private Float taccount;//总成绩
+    private Float totalCount;//总成绩
     
-    private Float zzDFCount;//正职打分成绩
+    private Integer totalPersons;//打分的总人数
     
-    private Float nsfzrDFCount;//内设负责人打分
+    private Float totalAverage;//总平均分
     
-    private Float averageCount;//所有的平均分
+    private Float zzCount;//正职位成绩
     
-    private Float otherTotalCount;//其它打分者的总分
+    private Integer zzPersons;//正职位打分的总人数
     
-    private Float otherAverageCount;//其它打分者的平均分
+    private Float zzAverage;//正职位平均分
     
-    private Integer beDfTimes;//被打分次数
+    private Float fzCount;//副职总成绩
+    
+    private Integer fzPersons;//副职打分的总人数
+    
+    private Float fzAverage;//副职位平均分
+    
+    private Float zsbmMgrCount;//内设部门管理员打分总成绩
+    
+    private Integer zsbmMgrPersons;//内设部门管理员打分总人数
+    
+    private Float zsbmMgrAverage;//内设部门管理员打分平均分
 
-    private Byte isok;
+    private Float ptryCount;//普通人员打分总成绩
+    
+    private Integer ptryPersons;//普通人员打分总人数
+    
+    private Float ptryAverage;//普通人员打分平均分
 
     private Integer operuserdid;
 
@@ -38,124 +67,5 @@ public class ViewGrade implements Serializable {
 
     private String boperusername;
 
-	public String getOperusercode() {
-		return operusercode;
-	}
-
-	public void setOperusercode(String operusercode) {
-		this.operusercode = operusercode;
-	}
-
-	public String getBoperusercode() {
-		return boperusercode;
-	}
-
-	public void setBoperusercode(String boperusercode) {
-		this.boperusercode = boperusercode;
-	}
-
-	public Date getOpertiime() {
-		return opertiime;
-	}
-
-	public void setOpertiime(Date opertiime) {
-		this.opertiime = opertiime;
-	}
-
-	public Byte getOperquarter() {
-		return operquarter;
-	}
-
-	public void setOperquarter(Byte operquarter) {
-		this.operquarter = operquarter;
-	}
-
-	public Float getTaccount() {
-		return taccount;
-	}
-
-	public void setTaccount(Float taccount) {
-		this.taccount = taccount;
-	}
-
-	public Float getZzDFCount() {
-		return zzDFCount;
-	}
-
-	public void setZzDFCount(Float zzDFCount) {
-		this.zzDFCount = zzDFCount;
-	}
-
-	public Float getNsfzrDFCount() {
-		return nsfzrDFCount;
-	}
-
-	public void setNsfzrDFCount(Float nsfzrDFCount) {
-		this.nsfzrDFCount = nsfzrDFCount;
-	}
-
-	public Float getAverageCount() {
-		return averageCount;
-	}
-
-	public void setAverageCount(Float averageCount) {
-		this.averageCount = averageCount;
-	}
-
-	public Float getOtherTotalCount() {
-		return otherTotalCount;
-	}
-
-	public void setOtherTotalCount(Float otherTotalCount) {
-		this.otherTotalCount = otherTotalCount;
-	}
-
-	public Float getOtherAverageCount() {
-		return otherAverageCount;
-	}
-
-	public void setOtherAverageCount(Float otherAverageCount) {
-		this.otherAverageCount = otherAverageCount;
-	}
-
-	public Byte getIsok() {
-		return isok;
-	}
-
-	public void setIsok(Byte isok) {
-		this.isok = isok;
-	}
-
-	public Integer getOperuserdid() {
-		return operuserdid;
-	}
-
-	public void setOperuserdid(Integer operuserdid) {
-		this.operuserdid = operuserdid;
-	}
-
-	public Integer getBoperuserdid() {
-		return boperuserdid;
-	}
-
-	public void setBoperuserdid(Integer boperuserdid) {
-		this.boperuserdid = boperuserdid;
-	}
-
-	public String getOperusername() {
-		return operusername;
-	}
-
-	public void setOperusername(String operusername) {
-		this.operusername = operusername;
-	}
-
-	public String getBoperusername() {
-		return boperusername;
-	}
-
-	public void setBoperusername(String boperusername) {
-		this.boperusername = boperusername;
-	}
     
 }

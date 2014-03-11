@@ -4,13 +4,17 @@ import java.io.File;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.codehaus.jackson.type.TypeReference;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -159,11 +163,25 @@ public class CommonCtler {
 	 */
 	@RequestMapping(value="savePf" , method = RequestMethod.POST)
 	public String savePf(HttpServletRequest request , @RequestParam("bPfUserDid") Integer bPfUserDid
-			, @RequestParam("grade") Float grade ,  Model model){
-		if(grade == null || grade.equals(0.0f)){
+			, @RequestParam("grade") Float grade ,@RequestParam("pfDetail") String pfDetail ,  Model model){
+		if(grade == null || grade.equals(0.0f) || StringUtils.isEmpty(pfDetail)){
 			model.addAttribute( "returnMsg",  "保存失败,打分为空.");
 			return  "forward:/viewWant2PF";
 		}else{
+			Map<String,Float> map = new HashMap<String,Float>();
+			ObjectMapper mapper = new ObjectMapper();
+//		 TODO: 将map的key变为int 然后插入
+			try {
+		 
+				//convert JSON string to Map
+				map = mapper.readValue(pfDetail, 
+				    new TypeReference<HashMap<String,String>>(){});
+		 
+				System.out.println(map);
+		 
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 			PFUser user = (PFUser) request.getSession().getAttribute(GlobalFinalAttr.SESSION_USER);
 			PFUser buser = arcServcieImpl.getSingleUserDid(bPfUserDid);
 			PFGrade pfGrade = new PFGrade();
