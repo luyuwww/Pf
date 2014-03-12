@@ -1,10 +1,12 @@
 package cn.ly.service.i;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.jws.WebService;
 
 import cn.ly.pojo.PFDept;
+import cn.ly.pojo.PFEvaluage;
 import cn.ly.pojo.PFGrade;
 import cn.ly.pojo.PFUser;
 /**
@@ -72,11 +74,15 @@ public interface ArcService {
 	 * <p>Title: 插入一个可选成绩</p>
 	 * @date 2014年2月28日
 	*/
-	public void saveGrade(PFGrade grade);
+	public Integer saveGrade(PFGrade grade);
 	
 	/**
 	 * <p>Title: 得到所有用户的分数</p>
 	 * @date 2014年3月3日
 	*/
 	public List<PFGrade> getTotalGrade();
+	
+	public Map<String, String> getMapBySqlReturnIntStr(String sql , String col1 , String col2);
+	
+	public Integer insertPfEvaluate(PFEvaluage evalue);
 }

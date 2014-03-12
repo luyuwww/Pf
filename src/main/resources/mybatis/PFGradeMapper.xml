@@ -116,7 +116,7 @@
       #{isok,jdbcType=TINYINT}, #{operuserdid,jdbcType=INTEGER}, #{boperuserdid,jdbcType=INTEGER}, 
       #{operusername,jdbcType=VARCHAR}, #{boperusername,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="cn.ly.pojo.PFGrade" >
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="did" parameterType="cn.ly.pojo.PFGrade">
     insert into pf_grade
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="did != null" >

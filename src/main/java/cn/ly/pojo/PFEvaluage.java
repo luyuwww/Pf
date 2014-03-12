@@ -12,7 +12,7 @@ public class PFEvaluage implements Serializable {
 
     private Integer pid;
 
-    private BigDecimal thecount;
+    private Float thecount;
 
     private static final long serialVersionUID = 1L;
 
@@ -48,11 +48,11 @@ public class PFEvaluage implements Serializable {
         this.pid = pid;
     }
 
-    public BigDecimal getThecount() {
+    public Float getThecount() {
         return thecount;
     }
 
-    public void setThecount(BigDecimal thecount) {
+    public void setThecount(Float thecount) {
         this.thecount = thecount;
     }
 }

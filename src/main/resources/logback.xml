@@ -1,11 +1,11 @@
 <!DOCTYPE logback>
 <configuration>
+	<property name="baseLogPath" value="c:/temp/_amssyncLog" />  
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
-            <pattern><![CDATA[date:%d{yyyy-MM-dd HH:mm:ss}\tthread:%thread\tlevel:%-5level\tlogger:%-48logger{48}\tmsg:%msg%n]]></pattern>
+            <pattern><![CDATA[Date:%d{yyyy-MM-dd HH:mm:ss}\t MSG:%msg%n]]></pattern>
         </encoder>
     </appender>
-	<property name="baseLogPath" value="c:/temp/_amssyncLog" />  
     <appender name="ROLLING"
         class="ch.qos.logback.core.rolling.RollingFileAppender">
         <Encoding>UTF-8</Encoding>
@@ -15,12 +15,13 @@
             <maxHistory>30</maxHistory>  
         </rollingPolicy>
         <encoder>
-            <Pattern><![CDATA[date:%d{yyyy-MM-dd HH:mm:ss}\tthread:%thread\tlevel:%-5level\tlogger:%-48logger{48}\tmsg:%msg%n]]></Pattern>
+            <Pattern><![CDATA[Date:%d{yyyy-MM-dd HH:mm:ss}\tthread:%thread\tlevel:%-5level\tlogger:%-48logger{48}\tmsg:%msg%n]]></Pattern>
         </encoder>
     </appender>
 
-    <!-- Application Loggers -->
-
+   <logger name="cn.ly">
+        <level value="debug" />
+    </logger>
     <!-- 3rdparty Loggers -->
     <logger name="org.springframework.core">
         <level value="warn" />

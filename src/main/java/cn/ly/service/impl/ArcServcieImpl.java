@@ -1,15 +1,18 @@
 package cn.ly.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import cn.ly.dao.i.PFDeptMapper;
+import cn.ly.dao.i.PFEvaluageMapper;
 import cn.ly.dao.i.PFGradeMapper;
 import cn.ly.dao.i.PFUserMapper;
 import cn.ly.pojo.PFDept;
+import cn.ly.pojo.PFEvaluage;
 import cn.ly.pojo.PFGrade;
 import cn.ly.pojo.PFUser;
 import cn.ly.pojo.PFUserExample;
@@ -57,8 +60,8 @@ public class ArcServcieImpl extends BaseService implements ArcService {
 		return pFUserMapper.getNoBePfList(dept.getBmflag(), user.getDid(), quarter);
 	}
 	
-	public void saveGrade(PFGrade grade){
-		pFGradeMapper.insertSelective(grade);
+	public Integer saveGrade(PFGrade grade){
+		return pFGradeMapper.insertSelective(grade);
 		
 	}
 	public List<PFGrade> getTotalGrade() {
@@ -76,4 +79,16 @@ public class ArcServcieImpl extends BaseService implements ArcService {
 	private PFDeptMapper pFDeptMapper;
 	@Autowired
 	private PFGradeMapper pFGradeMapper;
+	@Autowired
+	private PFEvaluageMapper pFEvaluageMapper;
+	@Override
+	public Map<String, String> getMapBySqlReturnIntStr(String sql,
+			String col1, String col2) {
+		return super.quert2Colum4Map(sql, col1, col2);
+	}
+
+	@Override
+	public Integer insertPfEvaluate(PFEvaluage evalue) {
+		return pFEvaluageMapper.insertSelective(evalue);
+	}
 }

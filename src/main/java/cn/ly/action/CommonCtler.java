@@ -5,8 +5,11 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -28,6 +31,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import ch.qos.logback.classic.Logger;
 import cn.ly.pojo.PFDept;
+import cn.ly.pojo.PFEvaluage;
 import cn.ly.pojo.PFGrade;
 import cn.ly.pojo.PFUser;
 import cn.ly.service.i.ArcService;
@@ -168,19 +172,11 @@ public class CommonCtler {
 			model.addAttribute( "returnMsg",  "保存失败,打分为空.");
 			return  "forward:/viewWant2PF";
 		}else{
-			Map<String,Float> map = new HashMap<String,Float>();
-			ObjectMapper mapper = new ObjectMapper();
-//		 TODO: 将map的key变为int 然后插入
+			Map<String,String> evaluateMap = new LinkedHashMap<String, String>();
 			try {
-		 
-				//convert JSON string to Map
-				map = mapper.readValue(pfDetail, 
-				    new TypeReference<HashMap<String,String>>(){});
-		 
-				System.out.println(map);
-		 
+				evaluateMap = new ObjectMapper().readValue(pfDetail, evaluateMap.getClass());
 			} catch (Exception e) {
-				e.printStackTrace();
+				log.error(e.getMessage());
 			}
 			PFUser user = (PFUser) request.getSession().getAttribute(GlobalFinalAttr.SESSION_USER);
 			PFUser buser = arcServcieImpl.getSingleUserDid(bPfUserDid);
@@ -195,8 +191,21 @@ public class CommonCtler {
 			pfGrade.setOperquarter(quarter);
 			pfGrade.setTaccount(grade);
 			pfGrade.setIsok((byte)1);
-			arcServcieImpl.saveGrade(pfGrade);
+			Integer insertResult = arcServcieImpl.saveGrade(pfGrade);
+			System.out.println(pfGrade.getDid());
 			model.addAttribute( "returnMsg", "保存成功");
+			
+			if(null != evaluateMap && insertResult.equals(1)){
+				Set<String> keySet = evaluateMap.keySet();
+				for (String key : keySet) {
+					PFEvaluage evl = new PFEvaluage();
+					evl.setPid(pfGrade.getDid());
+					evl.setThemean(getExamItemMap().get(key.toString()));
+					evl.setThecount(Float.parseFloat(evaluateMap.get(key)));
+					arcServcieImpl.insertPfEvaluate(evl);
+				}
+				
+			}
 			return  "forward:/viewWant2PF";
 		}
 	}
@@ -263,6 +272,13 @@ public class CommonCtler {
 		return "userlist.jsp";
 	}
 	
+	private  Map<String , String> getExamItemMap(){
+		if(examItemMap == null){
+			examItemMap = arcServcieImpl.getMapBySqlReturnIntStr("select did,itemname from pf_examitem" , "did" , "itemname");
+		}
+		return examItemMap;
+	}
+	
 	@Autowired
 	private ArcService arcServcieImpl;
 	//日志地址
@@ -276,5 +292,7 @@ public class CommonCtler {
 	@Autowired
 	@Value("${pf.opert.quarter.ch}")
 	private String kaoHeQi;
+	
+	private static Map<String , String> examItemMap = null;
 	private Logger log =  (Logger) LoggerFactory.getLogger(this.getClass());
 }
