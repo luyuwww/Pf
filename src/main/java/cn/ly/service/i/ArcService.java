@@ -5,6 +5,8 @@ import java.util.Map;
 
 import javax.jws.WebService;
 
+import org.apache.ibatis.annotations.Param;
+
 import cn.ly.pojo.PFDept;
 import cn.ly.pojo.PFEvaluage;
 import cn.ly.pojo.PFGrade;
@@ -85,4 +87,10 @@ public interface ArcService {
 	public Map<String, String> getMapBySqlReturnIntStr(String sql , String col1 , String col2);
 	
 	public Integer insertPfEvaluate(PFEvaluage evalue);
+	
+	/**
+	 *  <p>Title:通过被打分人的usercode获取该用户的打分详情 </p>
+	 * @date 2014年3月17日
+	*/
+	public  List<PFEvaluage> getBePfDetail(String boperusercode , String operusercode , Byte quarter);
 }

@@ -4,12 +4,10 @@ import java.io.File;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.TreeMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,7 +15,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
 import org.codehaus.jackson.map.ObjectMapper;
-import org.codehaus.jackson.type.TypeReference;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -111,6 +108,20 @@ public class CommonCtler {
 		ModelAndView mvv = new ModelAndView();
 		mvv.addObject("hasBePfUserList" , arcServcieImpl.getHasBePfList(user));
 		mvv.setViewName("hasBePfUserList.jsp");
+		return mvv;
+	}
+	/**
+	 * <p>Title: 查看已经评分过的详细</p>
+	 */
+	@RequestMapping(value="gotoViewHasBeDetail", method = RequestMethod.GET)
+	public ModelAndView gotoViewHasBeDetail(HttpServletRequest request , @RequestParam("boperusercode") String boperusercode
+			, @RequestParam("totalCount") String totalCount){
+		PFUser user = (PFUser) request.getSession().getAttribute(GlobalFinalAttr.SESSION_USER);
+		ModelAndView mvv = new ModelAndView();
+		mvv.addObject("beoperuser" , arcServcieImpl.getSingleUserCode(boperusercode));
+		mvv.addObject("hasBePfDetail" , arcServcieImpl.getBePfDetail(boperusercode, user.getUusercode(), quarter));
+		mvv.addObject("totalCount" , totalCount);
+		mvv.setViewName("hasBeDetailPfUserList.jsp");
 		return mvv;
 	}
 	/**

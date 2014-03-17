@@ -87,8 +87,11 @@ public class ArcServcieImpl extends BaseService implements ArcService {
 		return super.quert2Colum4Map(sql, col1, col2);
 	}
 
-	@Override
 	public Integer insertPfEvaluate(PFEvaluage evalue) {
 		return pFEvaluageMapper.insertSelective(evalue);
+	}
+
+	public List<PFEvaluage> getBePfDetail(String boperusercode , String operusercode , Byte quarter) {
+		return pFEvaluageMapper.getBePfDetail(boperusercode , operusercode , quarter);
 	}
 }

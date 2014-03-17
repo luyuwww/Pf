@@ -5,28 +5,29 @@
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>已被您评分用户列表</title>
+		<title>评分详细列表</title>
 	    <link href="${pageContext.request.contextPath}/res/js/bootstrap-3.0.3-dist/css/bootstrap.css" rel="stylesheet">
 	    <link href="${pageContext.request.contextPath}/res/js/bootstrap-3.0.3-dist/css/bootstrap-theme.min.css" rel="stylesheet">
 	    <link href="${pageContext.request.contextPath}/res/js/self/theme.css" rel="stylesheet">
         <link href="${pageContext.request.contextPath}/res/js/self/grid.css" rel="stylesheet">
+        <link href="${pageContext.request.contextPath}/res/img/login/login.css" rel="stylesheet" type="text/css" />
+		<script src="${pageContext.request.contextPath}/res/js/jquery1.10.2/jquery-1.10.2.min.js" type="text/javascript"></script> 
 	</head>
 	<body>
 		<div class="container">
 			<table class="table table-hover">
-				<caption>被你打过分的人</caption>
+				<p class="lead">${beoperuser.uusername} 被考核详情：总分(${totalCount})</p>
 				<thead>
 					<tr>
 						<th>#</th>
-						<th>被打分人</th>
-						<th>总分</th>
-						<th>详细</th>
+						<th>考核项</th>
+						<th>分</th>
 					</tr>
 				</thead>
 				<tbody>
-					<c:forEach var="user" items="${hasBePfUserList}" varStatus="count">
+					<c:forEach var="theGrade" items="${hasBePfDetail}" varStatus="count">
 	      					<c:choose>
-		      					<c:when test="${(count.index) mod 2 == 0 }">
+		      					<c:when test="${(count.index) mod 2 == 1 }">
 		      						<tr>
 		      					</c:when>
 		      					<c:otherwise>
@@ -34,13 +35,13 @@
 		      					</c:otherwise>
 	      					</c:choose>
 							<td>${count.index+1}</td>
-							<td>${user.boperusername}</td>
-							<td>${user.taccount}</td>
-							<td><a href="${pageContext.request.contextPath}/gotoViewHasBeDetail?boperusercode=${user.boperusercode}&totalCount=${user.taccount}">详细</a></td>
+							<td>${theGrade.themean}</td>
+							<td>${theGrade.thecount} </td>
 						</tr>
 					</c:forEach>
 				</tbody>
 			</table>
+			<a class="btn btn-lg" href="${pageContext.request.contextPath}/goto2Button">返回</a>
 		</div>
 	</body>
 </html>

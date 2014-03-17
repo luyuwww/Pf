@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
+import cn.ly.pojo.PFEvaluage;
 import cn.ly.pojo.PFGrade;
 import cn.ly.pojo.PFUser;
 
@@ -101,4 +102,12 @@ public interface BaseDao{
     */
     @Select("SELECT * FROM PF_GRADE WHERE OPERUSERCODE='${operusercode}'  AND OPERQUARTER=${quarter}")
     List<PFGrade> getHasPfUserList( @Param("operusercode") String operusercode , @Param("quarter")Byte quarter);
+    
+
+    /**
+     * <p>Title:通过被打分人的usercode获取该用户的打分详情 </p>
+    */
+    @Select(" select * from pf_evaluate where pid in (select did from pf_grade where boperusercode ='${boperusercode}'"
+    		+ " and operusercode='${operusercode}' and operquarter=${quarter}) order by did")
+    List<PFEvaluage> getBePfDetail(@Param("boperusercode") String boperusercode  , @Param("operusercode")String operusercode, @Param("quarter")Byte quarter );
 }
