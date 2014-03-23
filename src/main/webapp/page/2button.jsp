@@ -13,7 +13,8 @@
 	</head>
 	<body>
 		<div class="container">
-			<div class="btn btn-lg btn-info">共计(${want2pfTotalNum})</div><br><br>
+			<h2>你共需打分(${want2pfTotalNum}) 人</h2>
+			<br>
 			<a class="btn btn-lg btn-success"
 				href="${pageContext.request.contextPath}/viewHasPF">查看已评分(${haspfnum})</a>
 			<a class="btn btn-lg btn-danger"
@@ -21,8 +22,11 @@
 	 		<c:if test="${currntUserCode == 'ROOT'}"><!-- root才可以查看所有 -->
 	 			<br><br>
 				<a class="btn btn-lg btn-warning"
-		 			href="${pageContext.request.contextPath}/viewAllGrade">查看所有用后分数</a>
+		 			href="${pageContext.request.contextPath}/viewAllGrade">查看所有用户分数</a>
 	 		</c:if>
+	 		<br>
+	 		<br>
+			<a class="btn btn-lg" href="${pageContext.request.contextPath}/logon">登出</a>
 		</div>
 	</body>
 </html>

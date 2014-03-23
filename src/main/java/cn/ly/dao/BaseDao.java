@@ -2,6 +2,7 @@ package cn.ly.dao;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
@@ -91,9 +92,9 @@ public interface BaseDao{
      * <p>Description: </p>
      * @date 2014年3月3日
     */
-    @Select("SELECT BOPERUSERCODE ,BOPERUSERNAME ,SUM(TACCOUNT) TACCOUNT FROM PF_GRADE GROUP BY"
-    		+ " BOPERUSERCODE ,BOPERUSERNAME ORDER BY BOPERUSERCODE")
-    List<PFGrade> getTotalPersonGrade();
+    @Select("SELECT BOPERUSERCODE ,BOPERUSERNAME ,SUM(TACCOUNT) TACCOUNT , COUNT(TACCOUNT) TCOUNT FROM PF_GRADE WHERE OPERQUARTER=${quarter}"
+    		+ " GROUP BY BOPERUSERCODE ,BOPERUSERNAME ORDER BY BOPERUSERCODE")
+    List<Map<String, Object>> getTotalPersonGrade(@Param("quarter")Byte quarter);
     
     /**
      * <p>Title: 得到所有人的成绩</p>

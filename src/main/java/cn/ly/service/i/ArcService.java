@@ -11,6 +11,7 @@ import cn.ly.pojo.PFDept;
 import cn.ly.pojo.PFEvaluage;
 import cn.ly.pojo.PFGrade;
 import cn.ly.pojo.PFUser;
+import cn.ly.pojo.ViewGrade;
 /**
  * <p>Title: ArcService</p>
  * <p>Description: </p>
@@ -82,7 +83,7 @@ public interface ArcService {
 	 * <p>Title: 得到所有用户的分数</p>
 	 * @date 2014年3月3日
 	*/
-	public List<PFGrade> getTotalGrade();
+	public List<ViewGrade> getTotalGrade();
 	
 	public Map<String, String> getMapBySqlReturnIntStr(String sql , String col1 , String col2);
 	
@@ -93,4 +94,16 @@ public interface ArcService {
 	 * @date 2014年3月17日
 	*/
 	public  List<PFEvaluage> getBePfDetail(String boperusercode , String operusercode , Byte quarter);
+	
+	/**
+	 * <p>Title: 根据被打分者code得到相应级别打分人数</p>
+	 * 1.管理单位正职<br>
+	 * 2.管理单位副职<br>
+	 * 3.管理部门员工<br>
+	 * 4.经营单位正职<br>
+	 * 5.经营单位副职<br>
+	 * 6.内设机构管理人员<br>
+	 * 7.内设机构员工<br>
+	*/
+	public Map<String, Object> getLevelCountMap(String boperUserCode , Integer level , Integer bmflag);
 }

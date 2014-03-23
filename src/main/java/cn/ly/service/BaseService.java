@@ -24,7 +24,6 @@ import cn.ly.util.DateUtil;
 @Service
 public class BaseService {
 	
-	
 	protected String generateTimeToSQLDate(Object date){
 		String datevalue = null;
 		String typeStr = getDBTyeStr();

@@ -14,7 +14,7 @@
 	<body>
 		<div class="container">
 			<table class="table table-hover">
-				<caption>被你打过分的人</caption>
+				<caption class="table thumbnail" ><h2>被你打过分的人</h2></caption>
 				<thead>
 					<tr>
 						<th>#</th>
@@ -25,22 +25,25 @@
 				</thead>
 				<tbody>
 					<c:forEach var="user" items="${hasBePfUserList}" varStatus="count">
-	      					<c:choose>
-		      					<c:when test="${(count.index) mod 2 == 0 }">
-		      						<tr>
-		      					</c:when>
-		      					<c:otherwise>
-		      						<tr class="active">
-		      					</c:otherwise>
-	      					</c:choose>
-							<td>${count.index+1}</td>
-							<td>${user.boperusername}</td>
-							<td>${user.taccount}</td>
-							<td><a href="${pageContext.request.contextPath}/gotoViewHasBeDetail?boperusercode=${user.boperusercode}&totalCount=${user.taccount}">详细</a></td>
+      					<c:choose>
+	      					<c:when test="${(count.index) mod 2 == 0 }">
+	      						<tr>
+	      					</c:when>
+	      					<c:otherwise>
+	      						<tr class="active">
+	      					</c:otherwise>
+      					</c:choose>
+						<td>${count.index+1}</td>
+						<td>${user.boperusername}</td>
+						<td>${user.taccount}</td>
+						<td><a href="${pageContext.request.contextPath}/gotoViewHasBeDetail?boperusercode=${user.boperusercode}&totalCount=${user.taccount}">详细</a></td>
 						</tr>
 					</c:forEach>
 				</tbody>
 			</table>
+			<div align="left">
+				<a class="btn btn-lg" href="${pageContext.request.contextPath}/goto2Button">返回</a>
+			</div>
 		</div>
 	</body>
 </html>

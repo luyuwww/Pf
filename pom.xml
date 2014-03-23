@@ -103,6 +103,11 @@
 			<artifactId>commons-pool</artifactId>
 			<version>20030825.183949</version>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>3.9</version>
+		</dependency>
 		
 		<dependency>
 			<groupId>mysql</groupId>

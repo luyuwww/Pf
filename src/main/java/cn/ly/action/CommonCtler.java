@@ -1,7 +1,10 @@
 package cn.ly.action;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
@@ -11,9 +14,13 @@ import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +38,7 @@ import cn.ly.pojo.PFDept;
 import cn.ly.pojo.PFEvaluage;
 import cn.ly.pojo.PFGrade;
 import cn.ly.pojo.PFUser;
+import cn.ly.pojo.ViewGrade;
 import cn.ly.service.i.ArcService;
 import cn.ly.util.GlobalFinalAttr;
 
@@ -72,6 +80,19 @@ public class CommonCtler {
 		}else{
 			return new ModelAndView("againlogin", "returnMsg", "登录失败");
 		}
+	}
+	/**
+	 * logon
+	 */
+	@RequestMapping(value="/logon" , method = RequestMethod.GET)
+	public String logon(ModelMap modelMap, HttpServletRequest request) {
+		HttpSession session = request.getSession(false);
+		if(null != request && null != session){
+			session.removeAttribute(GlobalFinalAttr.SESSION_USER);
+			session.removeAttribute(GlobalFinalAttr.SESSION_DEPT);
+			session.invalidate();
+		}
+		return "index.jsp";
 	}
 	/**
 	 * login --> redirect 2button
@@ -138,18 +159,18 @@ public class CommonCtler {
 		return mvv;
 	}
 	/**
-	 * <p>Title: 查看所有用户的总成绩</p>
+	 * <p>Title: ROOT 查看所有用户的总成绩</p>
 	 * @date 2014年2月26日
 	 */
 	@RequestMapping(value="viewAllGrade")
 	public ModelAndView viewAllGrade(HttpServletRequest request){
 		PFUser user = (PFUser) request.getSession().getAttribute(GlobalFinalAttr.SESSION_USER);
 		ModelAndView mvv = new ModelAndView();
-		List<PFGrade> pfGradList = null;
+		List<ViewGrade> pfGradList = null;
 		if(user.getUusercode().equals("ROOT")){
 			pfGradList = arcServcieImpl.getTotalGrade();
 		}else{//如果不是bug这个页面是进不了 else的
-			pfGradList = new ArrayList<PFGrade>();
+			pfGradList = new ArrayList<ViewGrade>();
 		}
 		mvv.addObject("totalGradeList" , pfGradList);
 		mvv.setViewName("totalGradeList.jsp");
@@ -218,6 +239,82 @@ public class CommonCtler {
 				
 			}
 			return  "forward:/viewWant2PF";
+		}
+	}
+	
+	@RequestMapping(value = "/getXlsFile", method = RequestMethod.GET)
+	public void getXlsFile(HttpServletRequest request , HttpServletResponse response) {
+		PFUser user = (PFUser) request.getSession().getAttribute(GlobalFinalAttr.SESSION_USER);
+		ModelAndView mvv = new ModelAndView();
+		List<ViewGrade> pfGradList = null;
+		if(user.getUusercode().equals("ROOT")){
+			pfGradList = arcServcieImpl.getTotalGrade();
+		}else{//如果不是bug这个页面是进不了 else的
+			pfGradList = new ArrayList<ViewGrade>();
+		}
+		try {
+			// 清空response  
+			response.reset();  
+			// 设置response的Header  
+			response.addHeader("Content-Disposition", "attachment;filename=Shit.xls");  
+			OutputStream out = new BufferedOutputStream(response.getOutputStream()); 
+			response.setContentType("application/octet-stream"); 
+			
+			HSSFWorkbook wb = new HSSFWorkbook(); 
+	        //创建第一个sheet（页）
+	        Sheet sheet = wb.createSheet("所有员工成绩"); 
+	        
+	        int rowNum = 0;
+	        int cellNum = 0;
+	        
+	        Row row = sheet.createRow(rowNum++); 
+	        row.createCell(cellNum++).setCellValue("部门");
+	        row.createCell(cellNum++).setCellValue("姓名");
+	        row.createCell(cellNum++).setCellValue("正职人数");
+	        row.createCell(cellNum++).setCellValue("正职平均分");
+	        row.createCell(cellNum++).setCellValue("正职总分");
+	        row.createCell(cellNum++).setCellValue("副职人数");
+	        row.createCell(cellNum++).setCellValue("副职平均分");
+	        row.createCell(cellNum++).setCellValue("副职总分");
+	        row.createCell(cellNum++).setCellValue("内设部门管理人员人数");
+	        row.createCell(cellNum++).setCellValue("内设部门管理人员平均分");
+	        row.createCell(cellNum++).setCellValue("内设部门管理人员总分");
+	        row.createCell(cellNum++).setCellValue("普通人员人数");
+	        row.createCell(cellNum++).setCellValue("普通人员平均分");
+	        row.createCell(cellNum++).setCellValue("普通人员总分");
+	        row.createCell(cellNum++).setCellValue("所有人人数");
+	        row.createCell(cellNum++).setCellValue("所有人平均分");
+	        row.createCell(cellNum++).setCellValue("所有人总分");        
+	        for (ViewGrade vg : pfGradList) {
+	        	cellNum = 0;
+	        	row = sheet.createRow(rowNum++); 
+				row.createCell(cellNum++).setCellValue(vg.getBeOperUserDepName());
+				row.createCell(cellNum++).setCellValue(vg.getBoperusername());
+				row.createCell(cellNum++).setCellValue(vg.getZzPersons());
+				row.createCell(cellNum++).setCellValue(vg.getZzAverage());
+				row.createCell(cellNum++).setCellValue(vg.getZzCount());
+				   
+				row.createCell(cellNum++).setCellValue(vg.getFzPersons());
+				row.createCell(cellNum++).setCellValue(vg.getFzAverage());
+				row.createCell(cellNum++).setCellValue(vg.getFzCount());
+				
+				row.createCell(cellNum++).setCellValue(vg.getZsbmMgrPersons());
+				row.createCell(cellNum++).setCellValue(vg.getZsbmMgrAverage());
+				row.createCell(cellNum++).setCellValue(vg.getZsbmMgrCount());
+				   
+				row.createCell(cellNum++).setCellValue(vg.getPtryPersons());
+				row.createCell(cellNum++).setCellValue(vg.getPtryAverage());
+				row.createCell(cellNum++).setCellValue(vg.getPtryCount());
+				   
+				row.createCell(cellNum++).setCellValue(vg.getTotalPersons());
+				row.createCell(cellNum++).setCellValue(vg.getTotalAverage());
+				row.createCell(cellNum++).setCellValue(vg.getTotalCount());       
+			}
+	        wb.write(out);  
+	        out.flush();  
+	        out.close();
+		} catch (Exception e) {
+			log.error("电子文件名错误:" + e.getMessage());
 		}
 	}
 	//-------------------------------------------------

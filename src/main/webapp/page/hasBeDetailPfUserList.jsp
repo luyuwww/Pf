@@ -41,7 +41,9 @@
 					</c:forEach>
 				</tbody>
 			</table>
-			<a class="btn btn-lg" href="${pageContext.request.contextPath}/goto2Button">返回</a>
+			<div align="left">
+				<a class="btn btn-lg" href="${pageContext.request.contextPath}/goto2Button">返回</a>
+			</div>
 		</div>
 	</body>
 </html>
