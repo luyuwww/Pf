@@ -18,10 +18,11 @@
             <Pattern><![CDATA[Date:%d{yyyy-MM-dd HH:mm:ss}\tthread:%thread\tlevel:%-5level\tlogger:%-48logger{48}\tmsg:%msg%n]]></Pattern>
         </encoder>
     </appender>
-
+<!--  sql 打印
    <logger name="cn.ly">
         <level value="debug" />
     </logger>
+     -->
     <!-- 3rdparty Loggers -->
     <logger name="org.springframework.core">
         <level value="warn" />

@@ -13,8 +13,11 @@
 	</head>
 	<body>
 		<div class="container">
+			<div align="center">
+				 <h2>被你打过分的人</h2>
+				 <br>
+			</div>
 			<table class="table table-hover">
-				<caption class="table thumbnail" ><h2>被你打过分的人</h2></caption>
 				<thead>
 					<tr>
 						<th>#</th>
