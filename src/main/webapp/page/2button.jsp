@@ -27,6 +27,7 @@
 	 		<br>
 	 		<br>
 			<a class="btn btn-lg" href="${pageContext.request.contextPath}/logon">登出</a>
+			<a class="btn btn-lg" href="${pageContext.request.contextPath}/updatePassword">修改密码</a>
 		</div>
 	</body>
 </html>

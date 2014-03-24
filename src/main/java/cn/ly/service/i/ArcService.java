@@ -106,4 +106,15 @@ public interface ArcService {
 	 * 7.内设机构员工<br>
 	*/
 	public Map<String, Object> getLevelCountMap(String boperUserCode , Integer level , Integer bmflag);
+	
+	
+	/**
+	 * <p>Title: 修改用户密码</p>
+	 * <p>Description: </p>
+	 * @param user
+	 * @return
+	 * 
+	 * @date 2014年3月25日
+	*/
+	public Boolean updateUser(PFUser user);
 }

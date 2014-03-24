@@ -177,6 +177,17 @@ public class ArcServcieImpl extends BaseService implements ArcService {
 				+ level + " AND PID IN (SELECT DID FROM PF_DEPT WHERE BMFLAG=" + bmflag +")) GROUP BY BOPERUSERCODE";
 		return super.queryForMap(sql);	
 	}
+	@Override
+	public Boolean updateUser(PFUser user) {
+		try {
+			pFUserMapper.updateByPrimaryKey(user);
+			log.error(user.getUusercode()+" 修改了密码");
+			return true;
+		} catch (Exception e) {
+			log.error(e.getMessage()  , e);
+			return false;
+		}
+	}
 	
 	//当前季度
 	@Autowired
@@ -193,4 +204,6 @@ public class ArcServcieImpl extends BaseService implements ArcService {
 	private PFEvaluageMapper pFEvaluageMapper;
 	
 	private Logger log =  (Logger) LoggerFactory.getLogger(this.getClass());
+
+
 }

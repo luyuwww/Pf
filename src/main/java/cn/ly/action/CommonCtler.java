@@ -4,7 +4,6 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.OutputStream;
 import java.io.PrintWriter;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedHashMap;
@@ -79,6 +78,46 @@ public class CommonCtler {
 			}
 		}else{
 			return new ModelAndView("againlogin", "returnMsg", "登录失败");
+		}
+	}
+	/**
+	 * 去修改密码页面
+	 */
+	@RequestMapping(value="/updatePassword" , method = RequestMethod.GET)
+	public ModelAndView updatePassword(ModelMap modelMap, HttpServletRequest request) {
+		PFUser user = (PFUser) request.getSession(true).getAttribute(GlobalFinalAttr.SESSION_USER );
+		if(user !=  null){
+			ModelAndView mvv = new ModelAndView();
+			mvv.addObject("user", user);
+			mvv.setViewName("updatePassword.jsp");
+			return mvv;
+		}else{
+			return new ModelAndView("againlogin", "returnMsg", "连接失效请重新登录");
+		}
+	}
+	/**
+	 * 确认修改密码
+	 */
+	@RequestMapping(value="/submitPasword" , method = RequestMethod.POST)
+	public ModelAndView submitPasword(ModelMap modelMap, HttpServletRequest request 
+			, @RequestParam("oldps") String oldps , @RequestParam("newps1") String newps1 , @RequestParam("newps2") String newps2) {
+		PFUser user = (PFUser) request.getSession(true).getAttribute(GlobalFinalAttr.SESSION_USER );
+		if(user !=  null){
+			ModelAndView mvv = new ModelAndView();
+			if(!oldps.equals(user.getUpassword())){
+				mvv.addObject("returnMsg", "您输入的老密码不正确,修改失败");
+			}else{
+				user.setUpassword(newps1);
+				if(arcServcieImpl.updateUser(user)){
+					request.getSession(true).setAttribute(GlobalFinalAttr.SESSION_USER , user);
+				}
+				mvv.addObject("returnMsg", "修改密码成功!");
+			}
+			mvv.addObject("user", user);
+			mvv.setViewName("updatePassword.jsp");
+			return mvv;
+		}else{
+			return new ModelAndView("againlogin", "returnMsg", "连接失效请重新登录");
 		}
 	}
 	/**
@@ -271,13 +310,11 @@ public class CommonCtler {
 	        row.createCell(cellNum++).setCellValue("部门");
 	        row.createCell(cellNum++).setCellValue("姓名");
 	        row.createCell(cellNum++).setCellValue("正职人数");
-	        row.createCell(cellNum++).setCellValue("正职平均分");
 	        row.createCell(cellNum++).setCellValue("正职总分");
 	        row.createCell(cellNum++).setCellValue("副职人数");
 	        row.createCell(cellNum++).setCellValue("副职平均分");
 	        row.createCell(cellNum++).setCellValue("副职总分");
 	        row.createCell(cellNum++).setCellValue("内设部门管理人员人数");
-	        row.createCell(cellNum++).setCellValue("内设部门管理人员平均分");
 	        row.createCell(cellNum++).setCellValue("内设部门管理人员总分");
 	        row.createCell(cellNum++).setCellValue("普通人员人数");
 	        row.createCell(cellNum++).setCellValue("普通人员平均分");
@@ -291,7 +328,6 @@ public class CommonCtler {
 				row.createCell(cellNum++).setCellValue(vg.getBeOperUserDepName());
 				row.createCell(cellNum++).setCellValue(vg.getBoperusername());
 				row.createCell(cellNum++).setCellValue(vg.getZzPersons());
-				row.createCell(cellNum++).setCellValue(vg.getZzAverage());
 				row.createCell(cellNum++).setCellValue(vg.getZzCount());
 				   
 				row.createCell(cellNum++).setCellValue(vg.getFzPersons());
@@ -299,7 +335,6 @@ public class CommonCtler {
 				row.createCell(cellNum++).setCellValue(vg.getFzCount());
 				
 				row.createCell(cellNum++).setCellValue(vg.getZsbmMgrPersons());
-				row.createCell(cellNum++).setCellValue(vg.getZsbmMgrAverage());
 				row.createCell(cellNum++).setCellValue(vg.getZsbmMgrCount());
 				   
 				row.createCell(cellNum++).setCellValue(vg.getPtryPersons());

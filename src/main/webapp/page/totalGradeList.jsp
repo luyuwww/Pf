@@ -23,9 +23,9 @@
 						<th></th>
 						<th>部门</th>
 						<th>姓名</th>
-						<th colspan="3">正职人员</th>
+						<th colspan="2">正职人员</th>
 						<th colspan="3">副职人员</th>
-						<th colspan="3">内设部门管理人员</th>
+						<th colspan="2">内设部门管理人员</th>
 						<th colspan="3">普通人员</th>
 						<th colspan="3">所有人</th>
 					</tr>
@@ -35,7 +35,6 @@
 						<th>(被考核)</th>
 						
 						<th>人数</th>
-						<th>平均分</th>
 						<th>总分</th>
 						
 						<th>人数</th>
@@ -43,7 +42,6 @@
 						<th>总分</th>
 
 						<th>人数</th>
-						<th>平均分</th>
 						<th>总分</th>
 						
 
@@ -71,7 +69,6 @@
 						<td>${tGrade.boperusername}</td>
 						
 						<td>${tGrade.zzPersons}</td>
-						<td>${tGrade.zzAverage}</td>
 						<td>${tGrade.zzCount}</td>
 						
 						<td>${tGrade.fzPersons}</td>
@@ -79,7 +76,6 @@
 						<td>${tGrade.fzCount}</td>
 						
 						<td>${tGrade.zsbmMgrPersons}</td>
-						<td>${tGrade.zsbmMgrAverage}</td>
 						<td>${tGrade.zsbmMgrCount}</td>
 						
 						<td>${tGrade.ptryPersons}</td>
