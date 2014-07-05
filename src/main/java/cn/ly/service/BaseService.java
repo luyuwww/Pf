@@ -158,9 +158,6 @@ public class BaseService {
 	
 	@Autowired
 	private JdbcDao jdbcDao;
-	@Autowired
-	@Value("${sqlserverSchemaName}")
-	private String sqlserverSchemaName;
 	private String sysdate = null;
 	private Logger log =  (Logger) LoggerFactory.getLogger(this.getClass());
 }
