@@ -11,6 +11,7 @@ import java.util.TimeZone;
 import org.apache.ibatis.jdbc.RuntimeSqlException;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.stereotype.Component;
@@ -41,12 +42,12 @@ public class JdbcDaoImpl implements JdbcDao {
 	}
 	
 	public Map<String, Object> queryForMap(String sql) {
+		Map<String, Object> objctResult = null;
 		try {
-			return jdbcTemplate.queryForMap(sql);
-		} catch (Exception e) {
-			log.error(e.getMessage());
-			return null;
+			objctResult = jdbcTemplate.queryForMap(sql);
+		} catch (EmptyResultDataAccessException e) {
 		}
+		return objctResult;
 	}
 	public String query4String(String sql) {
 		try {
