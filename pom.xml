@@ -229,7 +229,7 @@
 			<artifactId>jackson-mapper-asl</artifactId>
 			<version>1.9.9</version>
 		</dependency>
-		
+		<!-- 数据源 -->
 		<dependency>
 			<groupId>com.jolbox</groupId>
 			<artifactId>bonecp</artifactId>
