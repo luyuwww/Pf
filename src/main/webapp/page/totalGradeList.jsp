@@ -14,44 +14,44 @@
 	<body>
 		<div class="container">
 			<div align="center">
-				 <h2>被你打过分的人</h2>
+				 <h2>神华工程公司${kaoheqi}绩效考核成绩</h2>
 				 <br>
 			</div>
-			<table class="table table-hover" border="1">
+			<table class="table table-striped table-bordered table-condensed text-center">
 				<thead>
 					<tr>
-						<th></th>
-						<th>部门</th>
-						<th>姓名</th>
-						<th colspan="2">正职人员</th>
-						<th colspan="3">副职人员</th>
-						<th colspan="2">内设部门管理人员</th>
-						<th colspan="3">普通人员</th>
-						<th colspan="3">所有人</th>
+						<th class="text-center">#</th>
+						<th class="text-center">部门</th>
+						<th class="text-center">姓名</th>
+						<th colspan="2" class="text-center">正职人员</th>
+						<th colspan="3" class="text-center">副职人员</th>
+						<th colspan="2" class="text-center">内设部门管理人员</th>
+						<th colspan="3" class="text-center">普通人员</th>
+						<th colspan="3" class="text-center">所有人</th>
 					</tr>
 					<tr>
-						<th>#</th>
-						<th>(被考核)</th>
-						<th>(被考核)</th>
+						<th></th>
+						<th></th>
+						<th class="text-center">(被考核)</th>
 						
-						<th>人数</th>
-						<th>总分</th>
+						<th class="text-center">人数</th>
+						<th class="text-center">总分</th>
 						
-						<th>人数</th>
-						<th>平均分</th>
-						<th>总分</th>
+						<th class="text-center">人数</th>
+						<th class="text-center">平均分</th>
+						<th class="text-center">总分</th>
 
-						<th>人数</th>
-						<th>总分</th>
+						<th class="text-center">人数</th>
+						<th class="text-center">总分</th>
 						
 
-						<th>人数</th>
-						<th>平均分</th>
-						<th>总分</th>
+						<th class="text-center">人数</th>
+						<th class="text-center">平均分</th>
+						<th class="text-center">总分</th>
 						
-						<th>人数</th>
-						<th>平均分</th>
-						<th>总分</th>
+						<th class="text-center">人数</th>
+						<th class="text-center">平均分</th>
+						<th class="text-center">总分</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -91,6 +91,7 @@
 			</table>
 			<div align="left">
 				<a class="btn btn-lg" href="${pageContext.request.contextPath}/goto2Button">返回</a>
+				<a class="btn btn-lg" href="${pageContext.request.contextPath}/logon">登出</a>
 			</div>
 			<div align="right">
 				<a class="btn btn-lg btn-warning"

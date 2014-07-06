@@ -19,17 +19,21 @@ import org.springframework.stereotype.Component;
 import ch.qos.logback.classic.Logger;
 @Component("jdbcDao")
 public class JdbcDaoImpl implements JdbcDao {
+	@Override
 	public void excute(String sql) throws RuntimeException{
 		jdbcTemplate.execute(sql);	
 	}
 	
+	@Override
 	public void update(String sql) throws RuntimeException{
 		jdbcTemplate.update(sql);
 	}
 	
+	@Override
 	public void insert(String sql) throws RuntimeException{
 		jdbcTemplate.update(sql);
 	}
+	@Override
 	public String getLjfByLibcode(Integer libcode) {
 		String result = "";
 		try {
@@ -41,6 +45,7 @@ public class JdbcDaoImpl implements JdbcDao {
 		return result;
 	}
 	
+	@Override
 	public Map<String, Object> queryForMap(String sql) {
 		Map<String, Object> objctResult = null;
 		try {
@@ -49,6 +54,7 @@ public class JdbcDaoImpl implements JdbcDao {
 		}
 		return objctResult;
 	}
+	@Override
 	public String query4String(String sql) {
 		try {
 			return jdbcTemplate.queryForObject(sql, String.class);
@@ -57,6 +63,7 @@ public class JdbcDaoImpl implements JdbcDao {
 			return "";
 		}
 	}
+	@Override
 	public Map<String, String> quert2Colum4Map(String sql , String col1 , String col2) {
 		Map<String, String> resultMap = null;
 		try {
@@ -78,6 +85,7 @@ public class JdbcDaoImpl implements JdbcDao {
 		return resultMap;
 	}
 	
+	@Override
 	public List<Map<String, Object>> quertListMap(String sql) {
 		try {
 			return jdbcTemplate.queryForList(sql);
@@ -87,6 +95,7 @@ public class JdbcDaoImpl implements JdbcDao {
 		}
 	}
 	
+	@Override
 	public Connection getConn(){
 		try {
 			return jdbcTemplate.getDataSource().getConnection();
@@ -96,6 +105,7 @@ public class JdbcDaoImpl implements JdbcDao {
 		}
 	}
 	
+	@Override
 	public void insertEfile(String tableName , PreparedStatementSetter efileSetter){
 		jdbcTemplate.update("insert into " + tableName + 
 				"(DID,PID,EFILENAME,TITLE,EXT,PZM,PATHNAME,STATUS,ATTR,ATTREX,CREATOR,CREATETIME,FILESIZE) "

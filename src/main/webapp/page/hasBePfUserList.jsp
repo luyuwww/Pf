@@ -23,7 +23,7 @@
 						<th>#</th>
 						<th>被打分人</th>
 						<th>总分</th>
-						<th>详细</th>
+						<th>预览</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -39,7 +39,7 @@
 						<td>${count.index+1}</td>
 						<td>${user.boperusername}</td>
 						<td>${user.taccount}</td>
-						<td><a href="${pageContext.request.contextPath}/gotoViewHasBeDetail?boperusercode=${user.boperusercode}&totalCount=${user.taccount}">详细</a></td>
+						<td><a href="${pageContext.request.contextPath}/gotoViewHasBeDetail?boperusercode=${user.boperusercode}&totalCount=${user.taccount}">预览</a></td>
 						</tr>
 					</c:forEach>
 				</tbody>

@@ -17,6 +17,7 @@ import cn.ly.dao.i.PFGradeMapper;
 import cn.ly.dao.i.PFUserMapper;
 import cn.ly.pojo.PFDept;
 import cn.ly.pojo.PFEvaluage;
+import cn.ly.pojo.PFEvaluageExample;
 import cn.ly.pojo.PFGrade;
 import cn.ly.pojo.PFUser;
 import cn.ly.pojo.PFUserExample;
@@ -26,14 +27,17 @@ import cn.ly.service.i.ArcService;
 
 @Service("arcServcieImpl")
 public class ArcServcieImpl extends BaseService implements ArcService {
+	@Override
 	public List<PFUser> listAllUser() {
 		return pFUserMapper.getAllUserList();
 	}
 	
+	@Override
 	public PFUser getSingleUserDid(Integer userDid){
 		return pFUserMapper.selectByPrimaryKey(userDid);
 	}
 
+	@Override
 	public PFUser getSingleUserCode(String uusercode) {
 		PFUserExample userEx = new PFUserExample();
 		userEx.createCriteria().andUusercodeEqualTo(uusercode);
@@ -46,29 +50,36 @@ public class ArcServcieImpl extends BaseService implements ArcService {
 		return null;
 	}
 	
+	@Override
 	public PFDept getDeptByDid(Integer did){
 		return pFDeptMapper.selectByPrimaryKey(did);
 	}
 
+	@Override
 	public Integer getADeptUserNum(Integer bmflag , PFUser user){
 		return pFUserMapper.onDeptUserNum(bmflag , user.getDid());
 	}
+	@Override
 	public Integer getHasPfNum(PFUser user){
 		return pFUserMapper.getHasPfNum(quarter, user.getDid());
 	}
 	
+	@Override
 	public List<PFGrade> getHasBePfList(PFUser user){
 		return pFUserMapper.getHasPfUserList(user.getUusercode() , quarter);
 	}
 	
+	@Override
 	public List<PFUser> getNoBePfList(PFUser user , PFDept dept){
 		return pFUserMapper.getNoBePfList(dept.getBmflag(), user.getDid(), quarter);
 	}
 	
+	@Override
 	public Integer saveGrade(PFGrade grade){
 		return pFGradeMapper.insertSelective(grade);
 		
 	}
+	@Override
 	public List<ViewGrade> getTotalGrade() {
 		List<ViewGrade> vgList = new ArrayList<ViewGrade>();
 		List<Map<String, Object>> gradeList = pFUserMapper.getTotalPersonGrade(quarter); 
@@ -158,19 +169,23 @@ public class ArcServcieImpl extends BaseService implements ArcService {
 		return vgList;
 	}
 	
+	@Override
 	public Map<String, String> getMapBySqlReturnIntStr(String sql,
 			String col1, String col2) {
 		return super.quert2Colum4Map(sql, col1, col2);
 	}
 
+	@Override
 	public Integer insertPfEvaluate(PFEvaluage evalue) {
 		return pFEvaluageMapper.insertSelective(evalue);
 	}
 
+	@Override
 	public List<PFEvaluage> getBePfDetail(String boperusercode , String operusercode , Byte quarter) {
 		return pFEvaluageMapper.getBePfDetail(boperusercode , operusercode , quarter);
 	}
 	
+	@Override
 	public Map<String, Object> getLevelCountMap(String boperUserCode , Integer level , Integer bmflag){
 		String sql = "SELECT BOPERUSERCODE , COUNT(BOPERUSERCODE) PERSONNUM, SUM(TACCOUNT) SUMCOUNT "
 				+ "FROM PF_GRADE WHERE BOPERUSERCODE='"+boperUserCode+"' AND OPERUSERCODE IN(SELECT UUSERCODE FROM PF_USER WHERE ULEVEL="
@@ -187,6 +202,27 @@ public class ArcServcieImpl extends BaseService implements ArcService {
 			log.error(e.getMessage()  , e);
 			return false;
 		}
+	}
+	@Override
+	public Float updateEvaluage(Integer did, Float cj){
+		PFEvaluage evl = pFEvaluageMapper.selectByPrimaryKey(did);
+		evl.setThecount(cj);
+		pFEvaluageMapper.updateByPrimaryKey(evl);
+		return reCountGrade(evl.getPid());
+	}
+	
+	private Float reCountGrade(Integer did){
+		Float tCount = 0.0f;
+		PFEvaluageExample exp = new PFEvaluageExample();
+		exp.createCriteria().andPidEqualTo(did);
+		List<PFEvaluage> vList = pFEvaluageMapper.selectByExample(exp);
+		for (PFEvaluage vv : vList) {
+			tCount = tCount + vv.getThecount();
+		}
+		PFGrade grade = pFGradeMapper.selectByPrimaryKey(did);
+		grade.setTaccount(tCount);
+		pFGradeMapper.updateByPrimaryKey(grade);
+		return tCount;
 	}
 	
 	//当前季度

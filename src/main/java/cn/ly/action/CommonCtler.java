@@ -2,9 +2,11 @@ package cn.ly.action;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -144,6 +146,11 @@ public class CommonCtler {
 			File[] listFile = new File(logHomeAdd).listFiles();
 			request.getSession(true).setAttribute(GlobalFinalAttr.SESSION_USER , user);
 			request.getSession(true).setAttribute(GlobalFinalAttr.SESSION_DEPT , dept);
+			//如果领导直接到查看所有人分数的页面
+			if(getLeader().contains(user.getUusercode())){
+				return new ModelAndView("forward: /viewAllGrade");
+			}
+			
 			//取 2个数 1打过 2没打过的.
 			ModelAndView mvv = new ModelAndView();
 			mvv.addObject("listFile", listFile);
@@ -153,11 +160,9 @@ public class CommonCtler {
 			mvv.setViewName("2button.jsp");
 			return mvv;
 		}else{
-			return new ModelAndView("againlogin", "returnMsg", "连接失效请重新登录");
+			return new ModelAndView("/index.jsp", "returnMsg", "连接失效请重新登录");
 		}
 	}
-	
-	
 	
 	/**
 	 * <p>Title: 查看已经评分过的</p>
@@ -203,16 +208,22 @@ public class CommonCtler {
 	 */
 	@RequestMapping(value="viewAllGrade")
 	public ModelAndView viewAllGrade(HttpServletRequest request){
+		ModelAndView mvv = null;
 		PFUser user = (PFUser) request.getSession().getAttribute(GlobalFinalAttr.SESSION_USER);
-		ModelAndView mvv = new ModelAndView();
-		List<ViewGrade> pfGradList = null;
-		if(user.getUusercode().equals("ROOT")){
-			pfGradList = arcServcieImpl.getTotalGrade();
-		}else{//如果不是bug这个页面是进不了 else的
-			pfGradList = new ArrayList<ViewGrade>();
+		if(null == user){
+			mvv = new ModelAndView("againlogin", "returnMsg", "连接失效请重新登录");
+		}else{
+			mvv = new ModelAndView();
+			List<ViewGrade> pfGradList = null;
+			if(getLeader().contains(user.getUusercode()) || user.getUusercode().toUpperCase().equals("ROOT")){
+				pfGradList = arcServcieImpl.getTotalGrade();
+			}else{//如果不是bug这个页面是进不了 else的
+				pfGradList = new ArrayList<ViewGrade>();
+			}
+			mvv.addObject("totalGradeList" , pfGradList);
+			mvv.setViewName("totalGradeList.jsp");
+			mvv.addObject("kaoheqi" , kaoHeQi);//考核期
 		}
-		mvv.addObject("totalGradeList" , pfGradList);
-		mvv.setViewName("totalGradeList.jsp");
 		return mvv;
 	}
 	
@@ -415,11 +426,35 @@ public class CommonCtler {
 		return "userlist.jsp";
 	}
 	
+	/**
+	 * login
+	 */
+	@RequestMapping(value="/changeGrade" , method = RequestMethod.GET)
+	public void changeGrade(HttpServletResponse response, @RequestParam("did") Integer did ,@RequestParam("updateVal") Float updateVal) {
+		Float result = arcServcieImpl.updateEvaluage(did , updateVal);
+		PrintWriter out = null;
+		try {
+			response.setContentType("text/plain");  
+			out = response.getWriter();
+			out.write(result != null ? result.toString() : "");
+			out.flush();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	private  Map<String , String> getExamItemMap(){
 		if(examItemMap == null){
 			examItemMap = arcServcieImpl.getMapBySqlReturnIntStr("select did,itemname from pf_examitem" , "did" , "itemname");
 		}
 		return examItemMap;
+	}
+	
+	private List<String> getLeader(){
+		if(leanders == null){
+			leanders = Arrays.asList(leaderUserCodes.split("[,]"));
+		}
+		return leanders;
 	}
 	
 	@Autowired
@@ -435,6 +470,13 @@ public class CommonCtler {
 	@Autowired
 	@Value("${pf.opert.quarter.ch}")
 	private String kaoHeQi;
+	
+	/** 领导str*/
+	@Autowired
+	@Value("${redirect.leader.codes}")
+	private String leaderUserCodes;
+	
+	private List<String> leanders;
 	
 	private static Map<String , String> examItemMap = null;
 	private Logger log =  (Logger) LoggerFactory.getLogger(this.getClass());

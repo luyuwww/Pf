@@ -5,8 +5,6 @@ import java.util.Map;
 
 import javax.jws.WebService;
 
-import org.apache.ibatis.annotations.Param;
-
 import cn.ly.pojo.PFDept;
 import cn.ly.pojo.PFEvaluage;
 import cn.ly.pojo.PFGrade;
@@ -117,4 +115,6 @@ public interface ArcService {
 	 * @date 2014年3月25日
 	*/
 	public Boolean updateUser(PFUser user);
+	
+	public Float updateEvaluage(Integer did, Float cj);
 }

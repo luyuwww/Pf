@@ -82,8 +82,8 @@ public class DateUtil {
 		int hr1 = (int) (ldate1 / 3600000); // 60*60*1000
 		int hr2 = (int) (ldate2 / 3600000);
 
-		int days1 = (int) hr1 / 24;
-		int days2 = (int) hr2 / 24;
+		int days1 = hr1 / 24;
+		int days2 = hr2 / 24;
 
 		long secsDiff = ldate2 - ldate1;
 

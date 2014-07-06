@@ -393,7 +393,7 @@ function gotoSubmit(){
 		<input name="grade" id="grade" type="hidden" value="0.0"/>
 		<input name="bPfUserDid" id="bPfUserDid" type="hidden" value="${boperuser.did}"/>
 		<input name="pfDetail" id="pfDetail" type="hidden" value=""/>
-		<a class="btn btn-lg btn-success" onclick="gotoSubmit()">提交</a>
+		<a class="btn btn-lg btn-success" onclick="gotoSubmit()">确定</a>
 	</form>
 	</p>
 </div>
