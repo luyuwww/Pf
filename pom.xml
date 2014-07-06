@@ -229,6 +229,13 @@
 			<artifactId>jackson-mapper-asl</artifactId>
 			<version>1.9.9</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>com.jolbox</groupId>
+			<artifactId>bonecp</artifactId>
+			<version>0.8.0-rc3</version>
+		</dependency>
+		
 	</dependencies>
 	<properties>
 		<commons-dbcp.version>1.4</commons-dbcp.version>
