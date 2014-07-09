@@ -148,7 +148,7 @@ public class CommonCtler {
 			request.getSession(true).setAttribute(GlobalFinalAttr.SESSION_DEPT , dept);
 			//如果领导直接到查看所有人分数的页面
 			if(getLeader().contains(user.getUusercode())){
-				return new ModelAndView("forward: /viewAllGrade");
+				return new ModelAndView("forward: /leadViewGrade");
 			}
 			
 			//取 2个数 1打过 2没打过的.
@@ -215,13 +215,37 @@ public class CommonCtler {
 		}else{
 			mvv = new ModelAndView();
 			List<ViewGrade> pfGradList = null;
-			if(getLeader().contains(user.getUusercode()) || user.getUusercode().toUpperCase().equals("ROOT")){
+			if(user.getUusercode().toUpperCase().equals("ROOT")){
 				pfGradList = arcServcieImpl.getTotalGrade();
 			}else{//如果不是bug这个页面是进不了 else的
 				pfGradList = new ArrayList<ViewGrade>();
 			}
 			mvv.addObject("totalGradeList" , pfGradList);
 			mvv.setViewName("totalGradeList.jsp");
+			mvv.addObject("kaoheqi" , kaoHeQi);//考核期
+		}
+		return mvv;
+	}
+	/**
+	 * <p>Title: ROOT 领导查看所有用户的总成绩</p>
+	 * @date 2014年2月26日
+	 */
+	@RequestMapping(value="leadViewGrade")
+	public ModelAndView leadViewGrade(HttpServletRequest request){
+		ModelAndView mvv = null;
+		PFUser user = (PFUser) request.getSession().getAttribute(GlobalFinalAttr.SESSION_USER);
+		if(null == user){
+			mvv = new ModelAndView("againlogin", "returnMsg", "连接失效请重新登录");
+		}else{
+			mvv = new ModelAndView();
+			List<ViewGrade> pfGradList = null;
+			if(getLeader().contains(user.getUusercode())){
+				pfGradList = arcServcieImpl.getTotalGrade();
+			}else{//如果不是bug这个页面是进不了 else的
+				pfGradList = new ArrayList<ViewGrade>();
+			}
+			mvv.addObject("totalGradeList" , pfGradList);
+			mvv.setViewName("totalGradeList4Lead.jsp");
 			mvv.addObject("kaoheqi" , kaoHeQi);//考核期
 		}
 		return mvv;
@@ -297,7 +321,7 @@ public class CommonCtler {
 		PFUser user = (PFUser) request.getSession().getAttribute(GlobalFinalAttr.SESSION_USER);
 		ModelAndView mvv = new ModelAndView();
 		List<ViewGrade> pfGradList = null;
-		if(user.getUusercode().equals("ROOT")){
+		if(user.getUusercode().equals("ROOT") || getLeader().contains(user.getUusercode())){
 			pfGradList = arcServcieImpl.getTotalGrade();
 		}else{//如果不是bug这个页面是进不了 else的
 			pfGradList = new ArrayList<ViewGrade>();

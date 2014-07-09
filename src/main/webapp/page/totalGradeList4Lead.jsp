@@ -27,7 +27,6 @@
 						<th colspan="3" class="text-center">副职人员</th>
 						<th colspan="2" class="text-center">内设部门管理人员</th>
 						<th colspan="3" class="text-center">普通人员</th>
-						<th colspan="3" class="text-center">所有人</th>
 					</tr>
 					<tr>
 						<th></th>
@@ -45,10 +44,6 @@
 						<th class="text-center">总分</th>
 						
 
-						<th class="text-center">人数</th>
-						<th class="text-center">平均分</th>
-						<th class="text-center">总分</th>
-						
 						<th class="text-center">人数</th>
 						<th class="text-center">平均分</th>
 						<th class="text-center">总分</th>
@@ -82,15 +77,12 @@
 						<td>${tGrade.ptryAverage}</td>
 						<td>${tGrade.ptryCount}</td>
 						
-						<td>${tGrade.totalPersons}</td>
-						<td>${tGrade.totalAverage}</td>
-						<td>${tGrade.totalCount}</td>
 						</tr>
 					</c:forEach>
 				</tbody>
 			</table>
 			<div align="left">
-				<a class="btn btn-lg" href="${pageContext.request.contextPath}/goto2Button">返回</a>
+				<a class="btn btn-lg" href="${pageContext.request.contextPath}/logon">登出</a>
 			</div>
 			<div align="right">
 				<a class="btn btn-lg btn-warning"
